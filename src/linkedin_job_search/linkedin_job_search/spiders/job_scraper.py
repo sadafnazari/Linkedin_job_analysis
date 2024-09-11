@@ -56,6 +56,9 @@ class JobScraperSpider(scrapy.Spider):
 
     def parse(self, response):
         urls = response.xpath("//li/div/a/@href").getall()
+        if not urls:
+            logging.log(logging.INFO, "No jobs found on this page, stopping the crawler.")
+            return
         for url in urls:
             try:
                 url = url[: url.find("?position")]
@@ -69,21 +72,20 @@ class JobScraperSpider(scrapy.Spider):
             except:
                 logging.log(logging.DEBUG, f"THIS URL CANNOT BE REACHED : {url}")
 
-        if len(urls) > 0:
-            self.counter += len(urls)
+        self.counter += len(urls)
 
-            self.next_page_url_job_listing = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&location={self.country_name}&geoId={self.geo_id}&f_TPR={self.period_code}&trk=public_jobs_jobs-search-bar_search-submit&start={self.counter}&original_referer="
+        self.next_page_url_job_listing = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&location={self.country_name}&geoId={self.geo_id}&f_TPR={self.period_code}&trk=public_jobs_jobs-search-bar_search-submit&start={self.counter}&original_referer="
 
-            if self.next_page_url_job_listing:
-                try:
-                    yield response.follow(
-                        url=self.next_page_url_job_listing,
-                        callback=self.parse,
-                        headers={"User-Agent": self.user_agent},
-                        dont_filter=True,
-                    )
-                except:
-                    logging.log(logging.DEBUG, "SOMETHING HAS GONE WRONG")
+        if self.next_page_url_job_listing:
+            try:
+                yield response.follow(
+                    url=self.next_page_url_job_listing,
+                    callback=self.parse,
+                    headers={"User-Agent": self.user_agent},
+                    dont_filter=True,
+                )
+            except:
+                logging.log(logging.DEBUG, "SOMETHING HAS GONE WRONG")
 
     def parse_job(self, response):
         title = response.xpath(
