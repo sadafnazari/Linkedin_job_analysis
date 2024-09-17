@@ -7,7 +7,10 @@ import json
 class JobScraperSpider(scrapy.Spider):
     name = "job_scraper"
     allowed_domains = ["linkedin.com"]
+    total_jobs = 0
+    counter_job_based_on_scraped = 0
     counter = 0
+    allowed_to_continue = True
 
     def __init__(self, *args, **kwargs):
         super(JobScraperSpider, self).__init__(*args, **kwargs)
@@ -56,9 +59,6 @@ class JobScraperSpider(scrapy.Spider):
 
     def parse(self, response):
         urls = response.xpath("//li/div/a/@href").getall()
-        if not urls:
-            logging.log(logging.INFO, "No jobs found on this page, stopping the crawler.")
-            return
         for url in urls:
             try:
                 url = url[: url.find("?position")]
@@ -76,7 +76,7 @@ class JobScraperSpider(scrapy.Spider):
 
         self.next_page_url_job_listing = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&location={self.country_name}&geoId={self.geo_id}&f_TPR={self.period_code}&trk=public_jobs_jobs-search-bar_search-submit&start={self.counter}&original_referer="
 
-        if self.next_page_url_job_listing:
+        if self.next_page_url_job_listing and not (len(urls) == 0 and self.counter == self.counter_job_based_on_scraped):
             try:
                 yield response.follow(
                     url=self.next_page_url_job_listing,
@@ -128,6 +128,7 @@ class JobScraperSpider(scrapy.Spider):
                 meta={"job_url": response.meta["job_url"]},
             )
             return
+        self.counter_job_based_on_scraped += 1
 
         yield {
             "title": title,

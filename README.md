@@ -26,7 +26,7 @@ The job information will be stored in a `SQLite` database.
 
 It is recommended to use `conda` for this project.
 ```bash
-conda create --name lja python==3.12 
+conda create --name lja python==3.12.0
 conda activate lja 
 ```
 
@@ -50,3 +50,6 @@ Two arguments should be given to the scraper:
 cd src/linkedin_job_search
 scrapy crawl job_scraper -a country=finland -a period=daily
 ```
+# Note 
+
+LinkedIn has set a limit on the publicly available jobs number, and only allows scraping the first 1000 jobs.
