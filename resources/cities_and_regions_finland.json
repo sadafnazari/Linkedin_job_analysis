@@ -1,0 +1,2516 @@
+[
+    {
+        "city":"Helsinki",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Tampere",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Espoo",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Turku",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Vantaa",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Oulu",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jyvaskyla",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuopio",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Lahti",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Kouvola",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Pori",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Joensuu",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lappeenranta",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Hameenlinna",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Vaasa",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Seinajoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Rovaniemi",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Mikkeli",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Salo",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kotka",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Porvoo",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kokkola",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lohja",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Hyvinkaa",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kirkkonummi",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Jarvenpaa",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Rauma",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Tuusula",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kajaani",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Savonlinna",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Kerava",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Nokia",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kaarina",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Ylojarvi",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kangasala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Jyvaskylan Maalaiskunta",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Riihimaki",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Raseborg",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Imatra",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Sastamala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Raahe",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Raisio",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hollola",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Lempaala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Tornio",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Siilinjarvi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Kurikka",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Iisalmi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Varkaus",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Klaukkala",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Valkeakoski",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Mantsala",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Aanekoski",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hamina",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuusankoski",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Korsholm",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lieto",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Heinola",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Kemi",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sipoo",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Jamsa",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Jakobstad",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Naantali",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Haukipudas",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Laukaa",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pirkkala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Pieksamaki",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Kempele",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Forssa",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Janakkala",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Kauhava",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Orimattila",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Loimaa",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pielisjarvi",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Uusikaupunki",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sippola",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Vammala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kontiolahti",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuusamo",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Pargas",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Ylivieska",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Nastola",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Lapua",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Loviisa",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kauhajoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kiiminki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ulvila",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Ilmajoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kalajoki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Liperi",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Eura",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Alavus",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Mikkelin Maalaiskunta",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vehkalahti",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Kankaanpaa",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Saaminki",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Mariehamn",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Lieksa",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Valkeala",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Pedersore",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Nivala",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Nurmo",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kivisto",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Joutseno",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Paimio",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sotkamo",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Hameenkyro",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Huittinen",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Liminka",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Muurame",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Alajarvi",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lapinlahti",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Leppavirta",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Saarijarvi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Ii",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Oulunsalo",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kitee",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Masku",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kauniainen",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Eurajoki",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Orivesi",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Narpes",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Hattula",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Keuruu",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Muhos",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Somero",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Halikko",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Karis",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Sodankyla",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Karkkila",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Poytya",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Laitila",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hanko",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Hausjarvi",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Keminmaa",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Elimaki",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Pudasjarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Loppi",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Laihia",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Toijala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Suomussalmi",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Nurmes",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jalasjarvi",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Nurmijarvi",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Mynamaki",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuhmo",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Oulainen",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kiuruvesi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Kokemaki",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Kemijarvi",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Nykarleby",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Rajamaki",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Jamsankoski",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Tyrvaa",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhaselka",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ikaalinen",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Outokumpu",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Sakyla",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Suonenjoki",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Virrat",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Inari",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Tyrnava",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Parkano",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Harjavalta",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Vora",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Haapajarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Eno",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Vanaja",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Haapavesi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jokela",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Palkane",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Piikkio",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Iitti",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Nilsia",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Kittila",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Viitasaari",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kronoby",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Mantta",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kristinestad",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Siuntio",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Mantyharju",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Tammela",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Pieksamaen Maalaiskunta",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Rusko",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Noormarkku",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Ahtari",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Heinolan Maalaiskunta",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Juva",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Loimaan Kunta",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pernio",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Nakkila",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Kerimaki",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Malax",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ylistaro",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kannus",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lammi",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Inga",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Suolahti",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Vilppula",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhajarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhtaa",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Ruokolahti",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kangasniemi",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Teuva",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Larsmo",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Parikkala",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Oulujoki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Viiala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Pornainen",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Sievi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jokioinen",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Kellokoski",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Korpilahti",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pojo",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Nousiainen",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Ristiina",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Aetsa",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Urjala",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Taipalsaari",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Juankoski",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vahakyro",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Askola",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Tohmajarvi",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Joroinen",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Alaharma",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jomala",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pielavesi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Ruovesi",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Hankasalmi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Paavola",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ilomantsi",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Vesilahti",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Ruukki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kalvia",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Saaksmaki",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Polvijarvi",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Isokyro",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Jurva",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Juuka",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Vanhakyla",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Ylitornio",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sonkajarvi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Taivalkoski",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Karkola",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Kaustinen",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Joutsa",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pihtipudas",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sysma",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Ranua",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Petajavesi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Tervakoski",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Aura",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hauho",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Simpele",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Koria",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Kolari",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pernaja",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kausala",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Maaninka",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vierema",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Uurainen",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Rantasalmi",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Salla",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Punkaharju",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Muuruvesi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Karstula",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pertteli",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Seinajoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Pello",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Heinavesi",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Paltamo",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Savitaipale",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Posio",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuortane",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Karttula",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vihti",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kalvola",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Luvia",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Virolahti",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Kiukainen",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Dragsfjard",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Toholampi",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Rautalampi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Veteli",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kimito",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Simo",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Lappi",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhajoki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Tervola",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Merikarvia",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Toysa",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Padasjoki",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Lappajarvi",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Uskela",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Maaria",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Lemi",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Vimpeli",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ivalo",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Vihanti",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Punkalaidun",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Sauvo",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Saynatsalo",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Tenala",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Keikya",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Yliharma",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Varpaisjarvi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vaala",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Nummi",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Ruotsinpyhtaa",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Mouhijarvi",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Reisjarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Utajarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Perho",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuorevesi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Teisko",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Puolanka",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Lapptrask",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuru",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kiikka",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kaavi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Koylio",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Kiihtelysvaara",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Vuolijoki",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Karkku",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Kylmakoski",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Tuusniemi",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Sulkava",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Hartola",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Oversundom",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Finstrom",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Konnevesi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Evijarvi",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Karsamaki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Alavieska",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Toivakka",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Karinainen",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Ypaja",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Keitele",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Himanka",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Muonio",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Raakkyla",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Valtimo",
+        "region_fi":"Pohjois Karjala",
+        "region_en":"North Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Pomarkku",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Karvia",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Hirvensalmi",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Koski Tl",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Soini",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Puumala",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Vesanto",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Humppila",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyharanta",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kuhmoinen",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hameenkoski",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Hyrynsalmi",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Miehikkala",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Lumijoki",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Marttila",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Korsnas",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Lemland",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pukkila",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Myrskyla",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Tarvasjoki",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Lavia",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Jamijarvi",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Enontekio",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Isojoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Honkajoki",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Kihnio",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Pertunmaa",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Rautavaara",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Multia",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Taivassalo",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Tervo",
+        "region_fi":"Pohjois Savo",
+        "region_en":"North Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhanta",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kinnula",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Hammarland",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Siikainen",
+        "region_fi":"Satakunta",
+        "region_en":"Satakunta",
+        "country":"Finland"
+    },
+    {
+        "city":"Oripaa",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Godby",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Enonkoski",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Ristijarvi",
+        "region_fi":"Kainuu",
+        "region_en":"Kainuu",
+        "country":"Finland"
+    },
+    {
+        "city":"Kannonkoski",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kaskinen",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Utsjoki",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Karijoki",
+        "region_fi":"Etela Pohjanmaa",
+        "region_en":"South Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kyyjarvi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Merijarvi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Kivijarvi",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Savukoski",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Halsua",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Hailuoto",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Pelkosenniemi",
+        "region_fi":"Lappi",
+        "region_en":"Lapland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kustavi",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Eckero",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Lestijarvi",
+        "region_fi":"Keski Pohjanmaa",
+        "region_en":"Central Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Luhanka",
+        "region_fi":"Keski Suomi",
+        "region_en":"Central Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Foglo",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Geta",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Vardo",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kumlinge",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Sottunga",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Nummela",
+        "region_fi":"Uusimaa",
+        "region_en":"Uusimaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Parola",
+        "region_fi":"Kanta Hame",
+        "region_en":"Kanta Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Juva",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Siltakyla",
+        "region_fi":"Kymenlaakso",
+        "region_en":"Kymenlaakso",
+        "country":"Finland"
+    },
+    {
+        "city":"Vaaksy",
+        "region_fi":"Paijat Hame",
+        "region_en":"Paijat Hame",
+        "country":"Finland"
+    },
+    {
+        "city":"Bennas",
+        "region_fi":"Pohjanmaa",
+        "region_en":"Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Odkarby",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Kyro",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Vinkkila",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Dalsbruk",
+        "region_fi":"Varsinais Suomi",
+        "region_en":"Southwest Finland",
+        "country":"Finland"
+    },
+    {
+        "city":"Bjorby",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Korkeakoski",
+        "region_fi":"Pirkanmaa",
+        "region_en":"Pirkanmaa",
+        "country":"Finland"
+    },
+    {
+        "city":"Taavetti",
+        "region_fi":"Etela Karjala",
+        "region_en":"South Karelia",
+        "country":"Finland"
+    },
+    {
+        "city":"Ava",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Karlby",
+        "region_fi":"Aland",
+        "region_en":"aland",
+        "country":"Finland"
+    },
+    {
+        "city":"Pyhasalmi",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    },
+    {
+        "city":"Polvijarvi",
+        "region_fi":"Etela Savo",
+        "region_en":"South Savo",
+        "country":"Finland"
+    },
+    {
+        "city":"Pulkkila",
+        "region_fi":"Pohjois Pohjanmaa",
+        "region_en":"North Ostrobothnia",
+        "country":"Finland"
+    }
+]

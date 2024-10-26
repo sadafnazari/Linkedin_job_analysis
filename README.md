@@ -4,6 +4,8 @@ LinkedIn Job Analysis project is based on the jobs, that are publicly available 
 
 This project is only implemented for learning purposes, and any inappropriate use of data is not the author's responsibility.
 
+Note: While the project is defined to be as generalized as possible, the current functionalities have been tested on Finland job market.
+
 # Introduction
 
 This project has been written with `Scrapy`. It can be customized with different criteria, as one can choose the country and the period of scraping, e.g. Finland.
@@ -13,6 +15,9 @@ The retrieved information is:
 - title
 - company
 - location
+- city
+- region
+- country
 - seniority_level
 - employment_type
 - job_function
@@ -53,3 +58,7 @@ scrapy crawl job_scraper -a country=finland -a period=daily
 # Note 
 
 LinkedIn has set a limit on the publicly available jobs number, and only allows scraping the first 1000 jobs.
+
+# References
+
+The `cities_and_regions_finland.json` file has been a modified version of the available list of cities and regions from <a href='https://simplemaps.com/data/fi-cities'>simplemaps</a> website.
