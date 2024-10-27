@@ -2,9 +2,13 @@
 
 LinkedIn Job Analysis project is based on the jobs, that are publicly available on Linkedin and the scraped data will remain under LinkedIn ownership.
 
-This project is only implemented for learning purposes, and any inappropriate use of data is not the author's responsibility.
+# Notes
 
-Note: While the project is defined to be as generalized as possible, the current functionalities have been tested on Finland job market.
+- This project is only implemented for learning purposes, and any inappropriate use of data is not the author's responsibility.
+
+- While the project is defined to be as generalized as possible, the current functionalities have been tested on Finland job market.
+
+- LinkedIn has set a limit on the publicly available jobs number, and only allows scraping the first 1000 jobs.
 
 # Introduction
 
@@ -55,9 +59,6 @@ Two arguments should be given to the scraper:
 cd src/linkedin_job_search
 scrapy crawl job_scraper -a country=finland -a period=daily
 ```
-# Note 
-
-LinkedIn has set a limit on the publicly available jobs number, and only allows scraping the first 1000 jobs.
 
 # References
 
