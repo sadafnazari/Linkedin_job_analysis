@@ -10,23 +10,23 @@ class LinkedinJobSearchPipeline:
         item["title"] = (
             item["title"].strip().replace("\n", "").replace(",", "").strip()
             if item["title"]
-            else ""
+            else "Unspecified"
         )
         item["company"] = (
             item["company"].strip().replace("\n", "").replace(",", "").strip()
             if item["company"]
-            else ""
+            else "Unspecified"
         )
         item["location"] = (
             item["location"].strip().replace("\n", "").replace(",", "").strip()
             if item["location"]
-            else ""
+            else "Unspecified"
         )
         item["city"], item["region"], item["country"] = self.normalize_location(item["location"], item["request_location"])
         item["date_posted"] = (
             item["date_posted"].strip().replace("\n", "").replace(",", "").strip()
             if item["date_posted"]
-            else ""
+            else "Unspecified"
         )
         item["date_posted"] = self.normalize_date(item["date_posted"])
         item["seniorty_level"] = (
@@ -37,17 +37,17 @@ class LinkedinJobSearchPipeline:
         item["employment_type"] = (
             item["employment_type"].strip().replace("\n", "").replace(",", "").strip()
             if item["employment_type"]
-            else ""
+            else "Unspecified"
         )
         item["job_function"] = (
             item["job_function"].strip().replace("\n", "").replace(",", "").strip()
             if item["job_function"]
-            else ""
+            else "Unspecified"
         )
         item["industries"] = (
             item["industries"].strip().replace("\n", "").replace(",", "").strip()
             if item["industries"]
-            else ""
+            else "Unspecified"
         )
         item["description"] = self.normalize_description(item["description"])
 
@@ -82,7 +82,7 @@ class LinkedinJobSearchPipeline:
         return cleaned_text
     
     def normalize_location(self, location, request_location):
-        config_file = os.path.join(os.getcwd(), f'../../resources/cities_and_regions_{request_location}.json')
+        config_file = os.path.join(os.getcwd(), f'../../resources/cities_and_regions_{request_location.lower()}.json')
         cities_and_regions = pd.read_json(config_file)
         location = self.normalize_location_text(location)
         location = location.lower()
