@@ -15,7 +15,7 @@ class JobScraperSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(JobScraperSpider, self).__init__(*args, **kwargs)
 
-        config_file = os.path.join(os.getcwd(), "config.json")
+        config_file = os.path.join(os.getcwd(), "../../configs/scrapy_config.json")
         with open(config_file, "r") as f:
             self.config = json.load(f)
 
