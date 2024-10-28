@@ -11,7 +11,7 @@ class LinkedinJobSearchItem(scrapy.Item):
     title = scrapy.Field()
     company = scrapy.Field()
     location = scrapy.Field()
-    seniorty_level = scrapy.Field()
+    seniority_level = scrapy.Field()
     employment_type = scrapy.Field()
     job_function = scrapy.Field()
     industries = scrapy.Field()

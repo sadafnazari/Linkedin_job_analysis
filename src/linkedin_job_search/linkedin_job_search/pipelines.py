@@ -29,9 +29,9 @@ class LinkedinJobSearchPipeline:
             else "Unspecified"
         )
         item["date_posted"] = self.normalize_date(item["date_posted"])
-        item["seniorty_level"] = (
-            item["seniorty_level"].strip().replace("\n", "").replace(",", "").strip()
-            if item["seniorty_level"]
+        item["seniority_level"] = (
+            item["seniority_level"].strip().replace("\n", "").replace(",", "").strip()
+            if item["seniority_level"]
             else ""
         )
         item["employment_type"] = (
@@ -168,7 +168,7 @@ class SQLiteStorePipeline:
                     city TEST,
                     region TEXT,
                     country TEXT,
-                    seniorty_level TEXT,
+                    seniority_level TEXT,
                     employment_type TEXT,
                     job_function TEXT,
                     industries TEXT,
@@ -187,7 +187,7 @@ class SQLiteStorePipeline:
     def process_item(self, item, spider):
         self.c.execute(
             """
-            INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniorty_level,employment_type,job_function,industries,description,job_url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+            INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniority_level,employment_type,job_function,industries,description,job_url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
         """,
             (
                 item["date_posted"],
@@ -197,7 +197,7 @@ class SQLiteStorePipeline:
                 item["city"],
                 item["region"],
                 item["country"],
-                item["seniorty_level"],
+                item["seniority_level"],
                 item["employment_type"],
                 item["job_function"],
                 item["industries"],

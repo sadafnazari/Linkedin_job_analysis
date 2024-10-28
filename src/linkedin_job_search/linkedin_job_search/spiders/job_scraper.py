@@ -136,7 +136,7 @@ class JobScraperSpider(scrapy.Spider):
             "location": location,
             "request_location": self.country_name,
             "date_posted": time_ago,
-            "seniorty_level": seniority_level,
+            "seniority_level": seniority_level,
             "employment_type": employment_type,
             "job_function": job_function,
             "industries": industries,
