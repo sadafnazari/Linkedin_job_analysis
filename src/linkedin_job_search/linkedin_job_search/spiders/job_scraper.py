@@ -55,10 +55,31 @@ class JobScraperSpider(scrapy.Spider):
             url=self.base_url,
             callback=self.parse,
             headers={"User-Agent": self.user_agent},
+            meta={"url": self.base_url}
         )
 
     def parse(self, response):
+        if self.counter == 0 and "Join LinkedIn" in response.text:
+            logging.log(logging.DEBUG, f"LOGIN PROMPT DETECTED, RETRYING")
+            yield response.follow(
+                url=response.meta["url"],
+                callback=self.parse,
+                headers={"User-Agent": self.user_agent},
+                dont_filter=True,
+                meta={"url": response.meta["url"]}
+            )
+            return
         urls = response.xpath("//li/div/a/@href").getall()
+        if len(urls) == 0 and self.counter == 0:
+            logging.log(logging.DEBUG, f"PAGE DID NOT LOAD CORRECTLY, RETRYING")
+            yield response.follow(
+                url=response.meta["url"],
+                callback=self.parse,
+                headers={"User-Agent": self.user_agent},
+                dont_filter=True,
+                meta={"url": response.meta["url"]}
+            )
+            return
         for url in urls:
             try:
                 url = url[: url.find("?position")]
@@ -83,6 +104,7 @@ class JobScraperSpider(scrapy.Spider):
                     callback=self.parse,
                     headers={"User-Agent": self.user_agent},
                     dont_filter=True,
+                    meta={"url": response.meta["url"]}
                 )
             except:
                 logging.log(logging.DEBUG, "SOMETHING HAS GONE WRONG")
