@@ -1,0 +1,130 @@
+[
+    {
+        "name": "Accounting",
+        "alternatives": ["Account", "Audit"]
+    },
+    {
+        "name": "Administrative",
+        "alternatives": ["Admin"]
+    },
+    {
+        "name": "Arts and Design",
+        "alternatives": ["Art", "Design", "Creative"]
+    },
+    {
+        "name": "Business Development",
+        "alternatives": ["Business"]
+    },
+    {
+        "name": "Community and Social Services",
+        "alternatives": ["Community", "Communication", "Social"]
+    },
+    {
+        "name": "Consulting",
+        "alternatives": ["Consult", "Advisor"]
+    },
+    {
+        "name": "Customer Success and Support",
+        "alternatives": ["Customer", "Client", "Client Support"]
+    },
+    {
+        "name": "Education",
+        "alternatives": ["Training", "Education"]
+    },
+    {
+        "name": "Engineering",
+        "alternatives": ["Engineer"]
+    },
+    {
+        "name": "Entrepreneurship",
+        "alternatives": ["Entrepreneur"]
+    },
+    {
+        "name": "Finance",
+        "alternatives": ["Financ", "Bank", "Purchas"]
+    },
+    {
+        "name": "Government and Public Sector",
+        "alternatives": ["Government", "Public"]
+    },
+    {
+        "name": "Healthcare Services",
+        "alternatives": ["Health", "Medical"]
+    },
+    {
+        "name": "Human Resources",
+        "alternatives": ["HR", "Human", "Personnel"]
+    },
+    {
+        "name": "Information Technology",
+        "alternatives": ["Information", "Tech", "IT", "Software"]
+    },
+    {
+        "name": "Legal",
+        "alternatives": ["Legal","Law"]
+    },
+    {
+        "name": "Manufacturing",
+        "alternatives": ["Manufactur"]
+    },
+    {
+        "name": "Marketing",
+        "alternatives": ["Market", "Advertis"]
+    },
+    {
+        "name": "Media and Communication",
+        "alternatives": ["Media"]
+    },
+    {
+        "name": "Military and Protective Services",
+        "alternatives": ["Military", "Defense", "Security", "Protect"]
+    },
+    {
+        "name": "Nonprofit Sector",
+        "alternatives": ["NGO", "Nonprofit"]
+    },
+    {
+        "name": "Operations",
+        "alternatives": ["Operation", "Mining", "Construction", "Transportat", "Import", "Export", "Automat"]
+    },
+    {
+        "name": "Product Management",
+        "alternatives": ["Product"]
+    },
+    {
+        "name": "Program and Project Management",
+        "alternatives": ["Project", "Program", "Management", "Coordination", "Strategy"]
+    },
+    {
+        "name": "Purchasing",
+        "alternatives": ["Purchase"]
+    },
+    {
+        "name": "Quality Assurance",
+        "alternatives": ["QA", "Quality", "Assurance"]
+    },
+    {
+        "name": "Real Estate",
+        "alternatives": ["Real Estate"]
+    },
+    {
+        "name": "Research",
+        "alternatives": ["Research", "Scientific", "Science"]
+    },
+    {
+        "name": "Retail",
+        "alternatives": ["Retail"]
+    },
+    {
+        "name": "Sales",
+        "alternatives": ["Sale"]
+    },
+    {
+        "name": "Sport",
+        "alternatives": ["Sport"]
+    },
+    {
+        "name": "Supply Chain",
+        "alternatives": ["Supply", "Chain"]
+    }
+]

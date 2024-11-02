@@ -4,8 +4,25 @@ from bs4 import BeautifulSoup
 import os
 import pandas as pd
 import unicodedata
+import json
 
 class LinkedinJobSearchPipeline:
+    def __init__(self, country_name):
+        config_file_cities_and_regions = os.path.join(os.getcwd(), f'../../resources/cities_and_regions_{country_name.lower()}.json')
+        self.cities_and_regions = pd.read_json(config_file_cities_and_regions)
+
+        config_file_job_fields = os.path.join(os.getcwd(), '../../resources/job_fields.json')
+        with open(config_file_job_fields, 'r') as file:
+            job_fields = json.load(file)
+        self.alternative_to_field = {}
+        for field in job_fields:
+            for alt in field["alternatives"]:
+                self.alternative_to_field[alt.lower()] = field["name"]
+    
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(country_name=crawler.spider.country_name)
+
     def process_item(self, item, spider):
         item["title"] = (
             item["title"].strip().replace("\n", "").replace(",", "").strip()
@@ -22,7 +39,7 @@ class LinkedinJobSearchPipeline:
             if item["location"]
             else "Unspecified"
         )
-        item["city"], item["region"], item["country"] = self.normalize_location(item["location"], item["request_location"])
+        item["city"], item["region"], item["country"] = self.normalize_location(item["location"])
         item["date_posted"] = (
             item["date_posted"].strip().replace("\n", "").replace(",", "").strip()
             if item["date_posted"]
@@ -44,6 +61,7 @@ class LinkedinJobSearchPipeline:
             if item["job_function"]
             else "Unspecified"
         )
+        item["job_fields"] = self.normalize_job_function(item["job_function"])
         item["industries"] = (
             item["industries"].strip().replace("\n", "").replace(",", "").strip()
             if item["industries"]
@@ -81,9 +99,7 @@ class LinkedinJobSearchPipeline:
         cleaned_text = " ".join(cleaned_text.split())
         return cleaned_text
     
-    def normalize_location(self, location, request_location):
-        config_file = os.path.join(os.getcwd(), f'../../resources/cities_and_regions_{request_location.lower()}.json')
-        cities_and_regions = pd.read_json(config_file)
+    def normalize_location(self, location):
         location = self.normalize_location_text(location)
         location = location.lower()
         location = location.replace('sub region', '')
@@ -94,7 +110,7 @@ class LinkedinJobSearchPipeline:
         city_match, region_match, country_match = None, None, None
 
         for part in location_parts:
-            city_row = cities_and_regions[cities_and_regions['city'].str.lower() == part]
+            city_row = self.cities_and_regions[self.cities_and_regions['city'].str.lower() == part]
             if not city_row.empty:
                 city_match = city_row.iloc[0]['city']
                 region_match = city_row.iloc[0]['region_en']
@@ -107,8 +123,8 @@ class LinkedinJobSearchPipeline:
             if num_parts > 3:
                 # Join the middle parts for region match
                 potential_region = ' '.join(location_parts[1:num_parts-1])
-                region_row = cities_and_regions[(cities_and_regions['region_fi'].str.lower() == potential_region) | 
-                                (cities_and_regions['region_en'].str.lower() == potential_region)]
+                region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == potential_region) | 
+                                (self.cities_and_regions['region_en'].str.lower() == potential_region)]
                 if not region_row.empty:
                     city_match = 'Unspecified'
                     region_match = region_row.iloc[0]['region_en']
@@ -117,15 +133,16 @@ class LinkedinJobSearchPipeline:
             elif num_parts == 3:
                 # Join the middle parts for region match
                 potential_region = ' '.join(location_parts[:num_parts-1])
-                region_row = cities_and_regions[(cities_and_regions['region_fi'].str.lower() == potential_region) | 
-                                (cities_and_regions['region_en'].str.lower() == potential_region) ]  
+                region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == potential_region) | 
+                                (self.cities_and_regions['region_en'].str.lower() == potential_region) ]  
                 if not region_row.empty:
                     city_match = 'Unspecified'
                     region_match = region_row.iloc[0]['region_en']
                     country_match = region_row.iloc[0]['country']
             else:
                 for part in location_parts:
-                    region_row = cities_and_regions[(cities_and_regions['region_fi'].str.lower() == part) | (cities_and_regions['region_en'].str.lower() == part)]
+                    region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == part) | 
+                                                         (self.cities_and_regions['region_en'].str.lower() == part)]
                     if not region_row.empty:
                         city_match = 'Unspecified'
                         region_match = region_row.iloc[0]['region_en']
@@ -150,6 +167,19 @@ class LinkedinJobSearchPipeline:
             text = text.replace('-', ' ')
             text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('utf-8')
         return text
+    
+    def normalize_job_function(self, job_function):        
+        job_function_lower = job_function.lower()
+        matched_fields = []
+
+        if job_function_lower in self.alternative_to_field:
+            matched_fields.append(self.alternative_to_field[job_function_lower])
+        else:
+            for alt, field_name in self.alternative_to_field.items():
+                if alt in job_function_lower and field_name not in matched_fields:
+                    matched_fields.append(field_name)
+        
+        return json.dumps(matched_fields if matched_fields else ["Other"])
 
 
 class SQLiteStorePipeline:
@@ -171,6 +201,7 @@ class SQLiteStorePipeline:
                     seniority_level TEXT,
                     employment_type TEXT,
                     job_function TEXT,
+                    job_fields TEXT,
                     industries TEXT,
                     description TEXT,
                     job_url TEXT
@@ -187,7 +218,7 @@ class SQLiteStorePipeline:
     def process_item(self, item, spider):
         self.c.execute(
             """
-            INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniority_level,employment_type,job_function,industries,description,job_url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+            INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniority_level,employment_type,job_function,job_fields,industries,description,job_url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """,
             (
                 item["date_posted"],
@@ -200,6 +231,7 @@ class SQLiteStorePipeline:
                 item["seniority_level"],
                 item["employment_type"],
                 item["job_function"],
+                item["job_fields"],
                 item["industries"],
                 item["description"],
                 item["job_url"],
