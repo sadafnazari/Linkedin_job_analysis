@@ -19,3 +19,6 @@ __pycache__/
 # Virtual environment
 venv/
 env/
+
+.streamlit/secrets.toml
+configs/linkedin-job-analysis-api-key.json

@@ -81,7 +81,7 @@
     },
     {
         "name": "Nonprofit Sector",
-        "alternatives": ["NGO", "Nonprofit"]
+        "alternatives": ["NGO", "Nonprofit", "None-profit"]
     },
     {
         "name": "Operations",

@@ -1,4 +1,4 @@
-# LinkedIn_job_analysis
+# LinkedIn job analysis
 
 LinkedIn Job Analysis project is based on the jobs, that are publicly available on Linkedin and the scraped data will remain under LinkedIn ownership.
 
@@ -42,7 +42,7 @@ conda activate lja
 
 The requirements can be installed with the following command:
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
