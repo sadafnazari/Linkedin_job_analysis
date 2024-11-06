@@ -13,13 +13,13 @@ if __name__ == "__main__":
     """
     <style>
         .reportview-container {
-            padding: 0; /* Remove padding around the main container */
+            padding: 0;
         }
         .main {
-            padding: 0; /* Remove padding inside the main area */
+            padding: 0;
         }
         .sidebar {
-            padding: 0; /* Remove padding in the sidebar if needed */
+            padding: 0;
         }
     </style>
     <h1 style='text-align: center;'>LinkedIn Job Analysis Dashboard</h1>
@@ -113,18 +113,16 @@ if __name__ == "__main__":
         df, selected_region, selected_time_period
     )
 
-    job_counts_by_region, sorted_regions = (
-        total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
-            df, selected_job_field, selected_time_period, seniority_levels
-        )
-    )
     job_counts_by_field, sorted_job_fields = (
         total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
             df, selected_region, selected_time_period, seniority_levels
         )
     )
-
-    # plot_line_total_jobs_per_month(job_counts_per_month)
+    job_counts_by_region, sorted_regions = (
+        total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
+            df, selected_job_field, selected_time_period, seniority_levels
+        )
+    )
 
     col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
     with col_pie_selectbox, st.container(border=True):

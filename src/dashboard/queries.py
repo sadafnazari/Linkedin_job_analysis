@@ -113,41 +113,6 @@ def top_10_companies_by_region_and_time_period(
 
     return top_15_companies_region
 
-
-def total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
-    df, selected_job_field, selected_time_period, seniority_levels
-):
-    field_job_counts = df[(df["job_fields"].apply(lambda x: selected_job_field in x))][
-        ["region", "seniority_level", "date_posted"]
-    ]
-
-    field_job_counts = filter_by_time_period(field_job_counts, selected_time_period)
-    job_counts_by_region = (
-        field_job_counts.groupby(["region", "seniority_level"])
-        .size()
-        .reset_index(name="count")
-    )
-    total_job_counts_by_region = (
-        job_counts_by_region.groupby("region")["count"]
-        .sum()
-        .reset_index(name="total_count")
-    )
-    sorted_regions = total_job_counts_by_region.sort_values(
-        by="total_count", ascending=False
-    )["region"]
-
-    job_counts_by_region["region"] = pd.Categorical(
-        job_counts_by_region["region"], categories=sorted_regions, ordered=True
-    )
-    job_counts_by_region["seniority_level"] = pd.Categorical(
-        job_counts_by_region["seniority_level"],
-        categories=seniority_levels,
-        ordered=True,
-    )
-
-    return job_counts_by_region, sorted_regions
-
-
 def total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
     df, selected_region, selected_time_period, seniority_levels
 ):
@@ -183,3 +148,38 @@ def total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
     )
 
     return job_counts_by_field, sorted_job_fields
+
+
+def total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
+    df, selected_job_field, selected_time_period, seniority_levels
+):
+    field_job_counts = df[(df["job_fields"].apply(lambda x: selected_job_field in x))][
+        ["region", "seniority_level", "date_posted"]
+    ]
+
+    field_job_counts = filter_by_time_period(field_job_counts, selected_time_period)
+    job_counts_by_region = (
+        field_job_counts.groupby(["region", "seniority_level"])
+        .size()
+        .reset_index(name="count")
+    )
+    total_job_counts_by_region = (
+        job_counts_by_region.groupby("region")["count"]
+        .sum()
+        .reset_index(name="total_count")
+    )
+    sorted_regions = total_job_counts_by_region.sort_values(
+        by="total_count", ascending=False
+    )["region"]
+
+    job_counts_by_region["region"] = pd.Categorical(
+        job_counts_by_region["region"], categories=sorted_regions, ordered=True
+    )
+    job_counts_by_region["seniority_level"] = pd.Categorical(
+        job_counts_by_region["seniority_level"],
+        categories=seniority_levels,
+        ordered=True,
+    )
+
+    return job_counts_by_region, sorted_regions
+

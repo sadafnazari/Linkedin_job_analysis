@@ -1,4 +1,4 @@
-# LinkedIn_job_analysis
+# LinkedIn job analysis
 
 LinkedIn Job Analysis project is based on the jobs, that are publicly available on Linkedin and the scraped data will remain under LinkedIn ownership.
 
