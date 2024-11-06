@@ -55,7 +55,7 @@ class JobScraperSpider(scrapy.Spider):
             url=self.base_url,
             callback=self.parse,
             headers={"User-Agent": self.user_agent},
-            meta={"url": self.base_url}
+            meta={"url": self.base_url},
         )
 
     def parse(self, response):
@@ -66,7 +66,7 @@ class JobScraperSpider(scrapy.Spider):
                 callback=self.parse,
                 headers={"User-Agent": self.user_agent},
                 dont_filter=True,
-                meta={"url": response.meta["url"]}
+                meta={"url": response.meta["url"]},
             )
             return
         urls = response.xpath("//li/div/a/@href").getall()
@@ -77,7 +77,7 @@ class JobScraperSpider(scrapy.Spider):
                 callback=self.parse,
                 headers={"User-Agent": self.user_agent},
                 dont_filter=True,
-                meta={"url": response.meta["url"]}
+                meta={"url": response.meta["url"]},
             )
             return
         for url in urls:
@@ -97,14 +97,16 @@ class JobScraperSpider(scrapy.Spider):
 
         self.next_page_url_job_listing = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&location={self.country_name}&geoId={self.geo_id}&f_TPR={self.period_code}&trk=public_jobs_jobs-search-bar_search-submit&start={self.counter}&original_referer="
 
-        if self.next_page_url_job_listing and not (len(urls) == 0 and self.counter == self.counter_job_based_on_scraped):
+        if self.next_page_url_job_listing and not (
+            len(urls) == 0 and self.counter == self.counter_job_based_on_scraped
+        ):
             try:
                 yield response.follow(
                     url=self.next_page_url_job_listing,
                     callback=self.parse,
                     headers={"User-Agent": self.user_agent},
                     dont_filter=True,
-                    meta={"url": response.meta["url"]}
+                    meta={"url": response.meta["url"]},
                 )
             except:
                 logging.log(logging.DEBUG, "SOMETHING HAS GONE WRONG")

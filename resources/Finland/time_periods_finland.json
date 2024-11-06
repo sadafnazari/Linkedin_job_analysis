@@ -1,0 +1,7 @@
+[
+    {"time_period": "Any time"},
+    {"time_period": "year"},
+    {"time_period": "month"},
+    {"time_period": "week"},
+    {"time_period": "day"}
+]

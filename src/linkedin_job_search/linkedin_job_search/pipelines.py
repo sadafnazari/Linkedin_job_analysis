@@ -6,19 +6,25 @@ import pandas as pd
 import unicodedata
 import json
 
+
 class LinkedinJobSearchPipeline:
     def __init__(self, country_name):
-        config_file_cities_and_regions = os.path.join(os.getcwd(), f'../../resources/cities_and_regions_{country_name.lower()}.json')
+        config_file_cities_and_regions = os.path.join(
+            os.getcwd(),
+            f"../../resources/{country_name.lower()}/cities_and_regions_{country_name.lower()}.json",
+        )
         self.cities_and_regions = pd.read_json(config_file_cities_and_regions)
 
-        config_file_job_fields = os.path.join(os.getcwd(), '../../resources/job_fields.json')
-        with open(config_file_job_fields, 'r') as file:
+        config_file_job_fields = os.path.join(
+            os.getcwd(), f"../../{country_name.lower()}/resources/job_fields.json"
+        )
+        with open(config_file_job_fields, "r") as file:
             job_fields = json.load(file)
         self.alternative_to_field = {}
         for field in job_fields:
             for alt in field["alternatives"]:
                 self.alternative_to_field[alt.lower()] = field["name"]
-    
+
     @classmethod
     def from_crawler(cls, crawler):
         return cls(country_name=crawler.spider.country_name)
@@ -39,7 +45,9 @@ class LinkedinJobSearchPipeline:
             if item["location"]
             else "Unspecified"
         )
-        item["city"], item["region"], item["country"] = self.normalize_location(item["location"])
+        item["city"], item["region"], item["country"] = self.normalize_location(
+            item["location"]
+        )
         item["date_posted"] = (
             item["date_posted"].strip().replace("\n", "").replace(",", "").strip()
             if item["date_posted"]
@@ -98,77 +106,101 @@ class LinkedinJobSearchPipeline:
 
         cleaned_text = " ".join(cleaned_text.split())
         return cleaned_text
-    
+
     def normalize_location(self, location):
         location = self.normalize_location_text(location)
         location = location.lower()
-        location = location.replace('sub region', '')
-        location = location.replace('northen', 'north')
-        location = location.replace('southern', 'south')
-        location = location.replace('savonia', 'savo')
+        location = location.replace("sub region", "")
+        location = location.replace("northen", "north")
+        location = location.replace("southern", "south")
+        location = location.replace("savonia", "savo")
         location_parts = location.split()
         city_match, region_match, country_match = None, None, None
 
         for part in location_parts:
-            city_row = self.cities_and_regions[self.cities_and_regions['city'].str.lower() == part]
+            city_row = self.cities_and_regions[
+                self.cities_and_regions["city"].str.lower() == part
+            ]
             if not city_row.empty:
-                city_match = city_row.iloc[0]['city']
-                region_match = city_row.iloc[0]['region_en']
-                country_match = city_row.iloc[0]['country']
+                city_match = city_row.iloc[0]["city"]
+                region_match = city_row.iloc[0]["region_en"]
+                country_match = city_row.iloc[0]["country"]
                 break
-        
+
         # If no city match, check for region match
         if city_match is None:
             num_parts = len(location_parts)
             if num_parts > 3:
                 # Join the middle parts for region match
-                potential_region = ' '.join(location_parts[1:num_parts-1])
-                region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == potential_region) | 
-                                (self.cities_and_regions['region_en'].str.lower() == potential_region)]
+                potential_region = " ".join(location_parts[1 : num_parts - 1])
+                region_row = self.cities_and_regions[
+                    (
+                        self.cities_and_regions["region_fi"].str.lower()
+                        == potential_region
+                    )
+                    | (
+                        self.cities_and_regions["region_en"].str.lower()
+                        == potential_region
+                    )
+                ]
                 if not region_row.empty:
-                    city_match = 'Unspecified'
-                    region_match = region_row.iloc[0]['region_en']
-                    country_match = region_row.iloc[0]['country']
-                    
+                    city_match = "Unspecified"
+                    region_match = region_row.iloc[0]["region_en"]
+                    country_match = region_row.iloc[0]["country"]
+
             elif num_parts == 3:
                 # Join the middle parts for region match
-                potential_region = ' '.join(location_parts[:num_parts-1])
-                region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == potential_region) | 
-                                (self.cities_and_regions['region_en'].str.lower() == potential_region) ]  
+                potential_region = " ".join(location_parts[: num_parts - 1])
+                region_row = self.cities_and_regions[
+                    (
+                        self.cities_and_regions["region_fi"].str.lower()
+                        == potential_region
+                    )
+                    | (
+                        self.cities_and_regions["region_en"].str.lower()
+                        == potential_region
+                    )
+                ]
                 if not region_row.empty:
-                    city_match = 'Unspecified'
-                    region_match = region_row.iloc[0]['region_en']
-                    country_match = region_row.iloc[0]['country']
+                    city_match = "Unspecified"
+                    region_match = region_row.iloc[0]["region_en"]
+                    country_match = region_row.iloc[0]["country"]
             else:
                 for part in location_parts:
-                    region_row = self.cities_and_regions[(self.cities_and_regions['region_fi'].str.lower() == part) | 
-                                                         (self.cities_and_regions['region_en'].str.lower() == part)]
+                    region_row = self.cities_and_regions[
+                        (self.cities_and_regions["region_fi"].str.lower() == part)
+                        | (self.cities_and_regions["region_en"].str.lower() == part)
+                    ]
                     if not region_row.empty:
-                        city_match = 'Unspecified'
-                        region_match = region_row.iloc[0]['region_en']
-                        country_match = region_row.iloc[0]['country']
+                        city_match = "Unspecified"
+                        region_match = region_row.iloc[0]["region_en"]
+                        country_match = region_row.iloc[0]["country"]
                         break
-        
+
         # If no city or region match, check for country
         if city_match is None and region_match is None:
-            if 'finland' in location_parts:
-                city_match = 'Unspecified'
-                region_match = 'Unspecified'
-                country_match = 'Finland'
+            if "finland" in location_parts:
+                city_match = "Unspecified"
+                region_match = "Unspecified"
+                country_match = "Finland"
             else:
-                city_match = 'Unspecified'
-                region_match = 'Unspecified'
-                country_match = 'Unspecified'
-        
+                city_match = "Unspecified"
+                region_match = "Unspecified"
+                country_match = "Unspecified"
+
         return city_match, region_match, country_match
 
     def normalize_location_text(self, text):
         if isinstance(text, str):
-            text = text.replace('-', ' ')
-            text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('utf-8')
+            text = text.replace("-", " ")
+            text = (
+                unicodedata.normalize("NFKD", text)
+                .encode("ASCII", "ignore")
+                .decode("utf-8")
+            )
         return text
-    
-    def normalize_job_function(self, job_function):        
+
+    def normalize_job_function(self, job_function):
         job_function_lower = job_function.lower()
         matched_fields = []
 
@@ -178,7 +210,7 @@ class LinkedinJobSearchPipeline:
             for alt, field_name in self.alternative_to_field.items():
                 if alt in job_function_lower and field_name not in matched_fields:
                     matched_fields.append(field_name)
-        
+
         return json.dumps(matched_fields if matched_fields else ["Other"])
 
 

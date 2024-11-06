@@ -42,7 +42,7 @@ conda activate lja
 
 The requirements can be installed with the following command:
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
