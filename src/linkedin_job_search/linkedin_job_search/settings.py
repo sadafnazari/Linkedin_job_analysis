@@ -22,7 +22,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 ITEM_PIPELINES = {
     "linkedin_job_search.pipelines.LinkedinJobSearchPipeline": 300,
-    "linkedin_job_search.pipelines.SQLiteStorePipeline": 400,
+    "linkedin_job_search.pipelines.PostgresPipeline": 400,
 }
 
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
