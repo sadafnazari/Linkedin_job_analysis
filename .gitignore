@@ -19,3 +19,5 @@ __pycache__/
 # Virtual environment
 venv/
 env/
+
+.streamlit/secrets.toml

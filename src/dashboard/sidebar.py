@@ -2,9 +2,10 @@ import streamlit as st
 
 
 def sidebar_selectbox_country(countries, default_country_index):
+    countries = [country[0].upper() + country[1:] for country in countries]
     st.sidebar.header("Filters")
     selected_country = st.sidebar.selectbox("Select country", options=countries, index=default_country_index)
-    return selected_country
+    return selected_country.lower()
 
 
 def sidebar_selectbox_rest(

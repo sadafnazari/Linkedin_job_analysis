@@ -1,12 +1,16 @@
-from load_data import load_data
-from load_defaults import load_defaults
-from pre_processing import pre_processing
+from load_data import *
+from load_defaults import *
+from pre_processing import *
 from load_resources import *
 from queries import *
 from plots import *
 from sidebar import *
+import os
 
 if __name__ == "__main__":
+    app_path = os.path.dirname(os.path.abspath(__file__))
+    app_path += '/../..'
+
     st.set_page_config(page_title="LinkedIn Job Analysis", layout="wide")
 
     st.markdown(
@@ -27,10 +31,15 @@ if __name__ == "__main__":
     """,
     unsafe_allow_html=True
     )
-    df = load_data("sqlite:///data/jobs.db")
 
-    countries = load_countries()
-    default_country = "Finland"
+    # For running locally
+    # df = load_data_local(f"{app_path}/data/jobs.db")
+
+    # For running on cloud
+    df = load_data_cloud(f"{app_path}/data/jobs.db")
+
+    countries = load_countries(app_path)
+    default_country = "finland"
     default_country_index = (
         countries.index(default_country) if default_country in countries else 0
     )
@@ -38,13 +47,13 @@ if __name__ == "__main__":
 
     df = pre_processing(df, selected_country)
 
-    regions = load_regions(selected_country)
-    job_fields = load_job_fields(selected_country)
-    seniority_levels = load_seniority_levels(selected_country)
-    time_periods = load_time_periods(selected_country)
+    regions = load_regions(app_path, selected_country)
+    job_fields = load_job_fields(app_path, selected_country)
+    seniority_levels = load_seniority_levels(app_path, selected_country)
+    time_periods = load_time_periods(app_path, selected_country)
 
     default_region, default_job_field, default_seniority_level, default_time_period = (
-        load_defaults(selected_country)
+        load_defaults(app_path, selected_country)
     )
 
     default_region_index = (

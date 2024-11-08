@@ -1,8 +1,8 @@
 import json
 
 
-def load_defaults(country):
-    with open("configs/streamlit_config.json", "r") as file:
+def load_defaults(app_path, country):
+    with open(f"{app_path}/configs/streamlit_config.json", "r") as file:
         defulats_data = json.load(file)
     countries = defulats_data["countries"]
     for item in countries:
