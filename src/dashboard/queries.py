@@ -52,20 +52,22 @@ def filter_jobs_by_selectbox(
     df,
     selected_region,
     selected_job_field,
-    selected_seniority_level,
-    selected_time_period,
-    total
+    selected_seniority_level
 ):
     filtered_df = df[
         (df["region"] == selected_region)
         & (df["job_fields"].apply(lambda x: selected_job_field in x))
         & (df["seniority_level"] == selected_seniority_level)
     ]
-    if not total:
-        filtered_df = filter_by_time_period(filtered_df, selected_time_period)
-
     return filtered_df
 
+def separate_for_seniority_levels(df, selected_region, selected_job_field, seniority_levels, selected_time_period):
+    count_seniority_levels = []
+    for level in seniority_levels:
+        df_seniority_level = filter_jobs_by_selectbox(df, selected_region, selected_job_field, level)
+        level_count = total_jobs_per_time_frequency(df_seniority_level, selected_time_period)
+        count_seniority_levels.append(level_count)
+    return count_seniority_levels
 
 def top_10_companies_by_selectbox(filtered_df):
     company_job_counts_field = (

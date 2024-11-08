@@ -89,21 +89,13 @@ if __name__ == "__main__":
         selected_region,
         selected_job_field,
         selected_seniority_level,
-        selected_time_period,
-        False
     )
+    filtered_df = filter_by_time_period(filtered_df, selected_time_period)
     sidebar_put_result(filtered_df)
-    
-    filtered_df_total = filter_jobs_by_selectbox(
-        df,
-        selected_region,
-        selected_job_field,
-        selected_seniority_level,
-        selected_time_period,
-        True
-    )
 
-    job_counts_selectbox = total_jobs_per_time_frequency(filtered_df_total, selected_time_period)
+    job_counts = total_jobs_per_time_frequency(df, selected_time_period)
+    
+    count_seniority_levels = separate_for_seniority_levels(df, selected_region, selected_job_field, seniority_levels, selected_time_period)
 
     top_10_companies_selectbox = top_10_companies_by_selectbox(filtered_df)
     top_10_companies_field = top_10_companies_by_job_field_and_time_period(
@@ -124,11 +116,13 @@ if __name__ == "__main__":
         )
     )
 
+    plot_line_total_jobs(job_counts, selected_time_period)
+
     col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
     with col_pie_selectbox, st.container(border=True):
         plot_pie_top_companies_seletbox(top_10_companies_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period)
     with col_bar_selectbox, st.container(border=True):
-        plot_line_total_jobs_selectbox(job_counts_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period)
+        plot_lines_total_jobs_selectbox_per_seniority_level(count_seniority_levels, selected_region, selected_job_field, seniority_levels, selected_time_period, color_mapping)
 
     col_pie_region, col_bar_region = st.columns([1, 2])
     with col_pie_region, st.container(border=True):

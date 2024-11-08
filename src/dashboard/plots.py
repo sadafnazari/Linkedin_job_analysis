@@ -1,8 +1,9 @@
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
 
-def plot_line_total_jobs_selectbox(job_counts_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period):
+def plot_line_total_jobs(job_counts, selected_time_period):
     text_helper = ''
     if selected_time_period == 'Any time':
         text_helper = 'for all the time'
@@ -10,21 +11,53 @@ def plot_line_total_jobs_selectbox(job_counts_selectbox, selected_region, select
         text_helper = 'on a daily basis'
     else:
         text_helper = f'on a {selected_time_period}ly basis'
-    fig_total_jobs_per_month_selectbox = px.line(
-        job_counts_selectbox,
+    fig_total_jobs = px.line(
+        job_counts,
         x=selected_time_period,
         y="job_count",
-        title=f"Number of jobs posted for {selected_job_field} in {selected_region} <br> for {selected_seniority_level} {text_helper}",
+        title=f"Number of jobs posted {text_helper}",
         labels={"range": selected_time_period, "job_count": "Number of Jobs"},
     )
-    fig_total_jobs_per_month_selectbox.update_traces(line=dict(color="#008080"))
-    fig_total_jobs_per_month_selectbox.update_layout(
+    fig_total_jobs.update_traces(line=dict(color="#008080"))
+    fig_total_jobs.update_layout(
         title=dict(
             xanchor='center',  
             x=0.5,
         )
     )
-    st.plotly_chart(fig_total_jobs_per_month_selectbox)
+    st.plotly_chart(fig_total_jobs)
+
+def plot_lines_total_jobs_selectbox_per_seniority_level(count_seniority_levels, selected_region, selected_job_field, seniority_levels, selected_time_period, color_mapping):
+    text_helper = ''
+    if selected_time_period == 'Any time':
+        text_helper = 'for all the time'
+    elif selected_time_period == 'day':
+        text_helper = 'on a daily basis'
+    else:
+        text_helper = f'on a {selected_time_period}ly basis'
+    fig_total_jobs_selectbox_per_seniority_level = go.Figure()
+    for level, df_level in zip(seniority_levels, count_seniority_levels):
+        fig_total_jobs_selectbox_per_seniority_level.add_trace(go.Scatter(
+            x=df_level[selected_time_period], 
+            y=df_level['job_count'], 
+            mode='lines', 
+            name=level,
+            line=dict(color=color_mapping[level])
+        ))
+    fig_total_jobs_selectbox_per_seniority_level.update_layout(
+        title=f"Number of jobs posted for {selected_job_field} in {selected_region} <br> for seniority_levels {text_helper}",
+        xaxis_title="Date",
+        yaxis_title="Number of Jobs",
+        legend_title="Seniority Level",
+        template="plotly_white"
+    )
+    fig_total_jobs_selectbox_per_seniority_level.update_layout(
+        title=dict(
+            xanchor='center',  
+            x=0.5,
+        )
+    )
+    st.plotly_chart(fig_total_jobs_selectbox_per_seniority_level)
 
 
 def plot_pie_top_companies_seletbox(top_15_companies_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period):
@@ -93,7 +126,6 @@ def plot_pie_top_companies_field(top_15_companies_field, selected_job_field, sel
         margin=dict(l=0, r=0),
     ) 
     st.plotly_chart(pie_top_companies_field, use_container_width=True)
-
 
 def plot_pie_top_companies_region(top_15_companies_region, selected_region, selected_time_period):
     pie_top_companies_region = px.pie(
