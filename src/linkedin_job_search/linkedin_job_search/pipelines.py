@@ -16,7 +16,7 @@ class LinkedinJobSearchPipeline:
         self.cities_and_regions = pd.read_json(config_file_cities_and_regions)
 
         config_file_job_fields = os.path.join(
-            os.getcwd(), f"../../{country_name.lower()}/resources/job_fields.json"
+            os.getcwd(), f"../../resources/{country_name.lower()}/job_fields_{country_name.lower()}.json"
         )
         with open(config_file_job_fields, "r") as file:
             job_fields = json.load(file)
