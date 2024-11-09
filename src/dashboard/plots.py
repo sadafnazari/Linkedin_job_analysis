@@ -4,13 +4,13 @@ import plotly.graph_objects as go
 
 
 def plot_line_total_jobs(job_counts, selected_time_period):
-    text_helper = ''
-    if selected_time_period == 'Any time':
-        text_helper = 'for all the time'
-    elif selected_time_period == 'day':
-        text_helper = 'on a daily basis'
+    text_helper = ""
+    if selected_time_period == "Any time":
+        text_helper = "for all the time"
+    elif selected_time_period == "day":
+        text_helper = "on a daily basis"
     else:
-        text_helper = f'on a {selected_time_period}ly basis'
+        text_helper = f"on a {selected_time_period}ly basis"
     fig_total_jobs = px.line(
         job_counts,
         x=selected_time_period,
@@ -21,46 +21,62 @@ def plot_line_total_jobs(job_counts, selected_time_period):
     fig_total_jobs.update_traces(line=dict(color="#008080"))
     fig_total_jobs.update_layout(
         title=dict(
-            xanchor='center',  
+            xanchor="center",
             x=0.5,
         )
     )
     st.plotly_chart(fig_total_jobs)
 
-def plot_lines_total_jobs_selectbox_per_seniority_level(count_seniority_levels, selected_region, selected_job_field, seniority_levels, selected_time_period, color_mapping):
-    text_helper = ''
-    if selected_time_period == 'Any time':
-        text_helper = 'for all the time'
-    elif selected_time_period == 'day':
-        text_helper = 'on a daily basis'
+
+def plot_lines_total_jobs_selectbox_per_seniority_level(
+    count_seniority_levels,
+    selected_region,
+    selected_job_field,
+    seniority_levels,
+    selected_time_period,
+    color_mapping,
+):
+    text_helper = ""
+    if selected_time_period == "Any time":
+        text_helper = "for all the time"
+    elif selected_time_period == "day":
+        text_helper = "on a daily basis"
     else:
-        text_helper = f'on a {selected_time_period}ly basis'
+        text_helper = f"on a {selected_time_period}ly basis"
     fig_total_jobs_selectbox_per_seniority_level = go.Figure()
     for level, df_level in zip(seniority_levels, count_seniority_levels):
-        fig_total_jobs_selectbox_per_seniority_level.add_trace(go.Scatter(
-            x=df_level[selected_time_period], 
-            y=df_level['job_count'], 
-            mode='lines', 
-            name=level,
-            line=dict(color=color_mapping[level])
-        ))
+        fig_total_jobs_selectbox_per_seniority_level.add_trace(
+            go.Scatter(
+                x=df_level[selected_time_period],
+                y=df_level["job_count"],
+                mode="lines",
+                name=level,
+                line=dict(color=color_mapping[level]),
+            )
+        )
     fig_total_jobs_selectbox_per_seniority_level.update_layout(
         title=f"Number of jobs posted for {selected_job_field} in {selected_region} <br> for seniority_levels {text_helper}",
         xaxis_title="Date",
         yaxis_title="Number of Jobs",
         legend_title="Seniority Level",
-        template="plotly_white"
+        template="plotly_white",
     )
     fig_total_jobs_selectbox_per_seniority_level.update_layout(
         title=dict(
-            xanchor='center',  
+            xanchor="center",
             x=0.5,
         )
     )
     st.plotly_chart(fig_total_jobs_selectbox_per_seniority_level)
 
 
-def plot_pie_top_companies_seletbox(top_15_companies_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period):
+def plot_pie_top_companies_seletbox(
+    top_15_companies_selectbox,
+    selected_region,
+    selected_job_field,
+    selected_seniority_level,
+    selected_time_period,
+):
     pie_top_companies_selectbox = px.pie(
         top_15_companies_selectbox,
         names="company",
@@ -69,32 +85,29 @@ def plot_pie_top_companies_seletbox(top_15_companies_selectbox, selected_region,
         color_discrete_sequence=px.colors.qualitative.Pastel,
     )
     pie_top_companies_selectbox.update_traces(
-    textinfo='percent', 
-    textposition='inside',    
+        textinfo="percent",
+        textposition="inside",
     )
     pie_top_companies_selectbox.update_layout(
         autosize=False,
         legend=dict(
-            orientation='h',            
-            yanchor='top',
-            y=0.0,                    
-            xanchor='left',
-            x=0.0,
-            itemwidth=50      
+            orientation="h", yanchor="top", y=0.0, xanchor="left", x=0.0, itemwidth=50
         ),
         title=dict(
-            xanchor='center',  
+            xanchor="center",
             x=0.5,
             subtitle=dict(
-                text=f'for {selected_job_field} <br> in {selected_region} for {selected_seniority_level} for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}'
-            )
+                text=f"for {selected_job_field} <br> in {selected_region} for {selected_seniority_level} for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}"
+            ),
         ),
         margin=dict(l=0, r=0),
-    ) 
+    )
     st.plotly_chart(pie_top_companies_selectbox)
 
 
-def plot_pie_top_companies_field(top_15_companies_field, selected_job_field, selected_time_period):
+def plot_pie_top_companies_field(
+    top_15_companies_field, selected_job_field, selected_time_period
+):
     pie_top_companies_field = px.pie(
         top_15_companies_field,
         names="company",
@@ -103,31 +116,29 @@ def plot_pie_top_companies_field(top_15_companies_field, selected_job_field, sel
         color_discrete_sequence=px.colors.qualitative.Pastel,
     )
     pie_top_companies_field.update_traces(
-    textinfo='percent', 
-    textposition='inside',    
+        textinfo="percent",
+        textposition="inside",
     )
     pie_top_companies_field.update_layout(
         autosize=False,
         legend=dict(
-            orientation='h',        
-            yanchor='top',
-            y=0.0,                 
-            xanchor='left',
-            x=0.0,
-            itemwidth=50              
+            orientation="h", yanchor="top", y=0.0, xanchor="left", x=0.0, itemwidth=50
         ),
         title=dict(
-            xanchor='center',  
+            xanchor="center",
             x=0.5,
             subtitle=dict(
-                text=f'for {selected_job_field} <br> in all regions for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}'
-            )
+                text=f"for {selected_job_field} <br> in all regions for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}"
+            ),
         ),
         margin=dict(l=0, r=0),
-    ) 
+    )
     st.plotly_chart(pie_top_companies_field, use_container_width=True)
 
-def plot_pie_top_companies_region(top_15_companies_region, selected_region, selected_time_period):
+
+def plot_pie_top_companies_region(
+    top_15_companies_region, selected_region, selected_time_period
+):
     pie_top_companies_region = px.pie(
         top_15_companies_region,
         names="company",
@@ -136,28 +147,23 @@ def plot_pie_top_companies_region(top_15_companies_region, selected_region, sele
         color_discrete_sequence=px.colors.qualitative.Pastel,
     )
     pie_top_companies_region.update_traces(
-    textinfo='percent', 
-    textposition='inside',     
+        textinfo="percent",
+        textposition="inside",
     )
     pie_top_companies_region.update_layout(
         autosize=False,
         legend=dict(
-            orientation='h',           
-            yanchor='top',
-            y=0.0,                  
-            xanchor='left',
-            x=0.0,
-            itemwidth=50             
+            orientation="h", yanchor="top", y=0.0, xanchor="left", x=0.0, itemwidth=50
         ),
         title=dict(
-            xanchor='center',  
+            xanchor="center",
             x=0.5,
             subtitle=dict(
-                text=f'in {selected_region} <br>  for all job fields for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}'
-            )
+                text=f"in {selected_region} <br>  for all job fields for {selected_time_period.lower() if selected_time_period == 'Any time' else 'the past '+selected_time_period}"
+            ),
         ),
         margin=dict(l=0, r=0),
-    ) 
+    )
     st.plotly_chart(pie_top_companies_region, use_container_width=True)
 
 
@@ -167,7 +173,7 @@ def plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels
     color_sequence,
     sorted_job_fields,
     seniority_levels,
-    selected_time_period
+    selected_time_period,
 ):
     fig_region_jobs = px.bar(
         job_counts_by_field,
@@ -190,9 +196,9 @@ def plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels
     fig_region_jobs.update_layout(
         xaxis_tickangle=90,
         title=dict(
-            xanchor='center',  
-            x=0.5,  
-        )
+            xanchor="center",
+            x=0.5,
+        ),
     )
     st.plotly_chart(fig_region_jobs)
 
@@ -203,7 +209,7 @@ def plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels
     color_sequence,
     sorted_regions,
     seniority_levels,
-    selected_time_period
+    selected_time_period,
 ):
     fig_field_jobs = px.bar(
         job_counts_by_region,
@@ -223,9 +229,8 @@ def plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels
     fig_field_jobs.update_layout(
         xaxis_tickangle=90,
         title=dict(
-            xanchor='center',  
-            x=0.5,  
-        )
+            xanchor="center",
+            x=0.5,
+        ),
     )
     st.plotly_chart(fig_field_jobs)
-

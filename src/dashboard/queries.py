@@ -2,25 +2,25 @@ import pandas as pd
 
 
 def total_jobs_per_time_frequency(df, selected_time_period):
-    if selected_time_period == 'day':
+    if selected_time_period == "day":
         job_counts = (
             df.groupby(pd.Grouper(key="date_posted", freq="D"))
             .size()
             .reset_index(name="job_count")
         )
-    elif selected_time_period == 'week':
+    elif selected_time_period == "week":
         job_counts = (
             df.groupby(pd.Grouper(key="date_posted", freq="W"))
             .size()
             .reset_index(name="job_count")
         )
-    elif selected_time_period == 'month':
+    elif selected_time_period == "month":
         job_counts = (
             df.groupby(pd.Grouper(key="date_posted", freq="ME"))
             .size()
             .reset_index(name="job_count")
         )
-    elif selected_time_period == 'year' or selected_time_period == 'Any time':
+    elif selected_time_period == "year" or selected_time_period == "Any time":
         job_counts = (
             df.groupby(pd.Grouper(key="date_posted", freq="YE"))
             .size()
@@ -28,9 +28,7 @@ def total_jobs_per_time_frequency(df, selected_time_period):
         )
 
     job_counts.rename(columns={"date_posted": selected_time_period}, inplace=True)
-    job_counts = job_counts.sort_values(selected_time_period).reset_index(
-        drop=True
-    )
+    job_counts = job_counts.sort_values(selected_time_period).reset_index(drop=True)
 
     return job_counts
 
@@ -49,10 +47,7 @@ def filter_by_time_period(df, time_period):
 
 
 def filter_jobs_by_selectbox(
-    df,
-    selected_region,
-    selected_job_field,
-    selected_seniority_level
+    df, selected_region, selected_job_field, selected_seniority_level
 ):
     filtered_df = df[
         (df["region"] == selected_region)
@@ -61,13 +56,21 @@ def filter_jobs_by_selectbox(
     ]
     return filtered_df
 
-def separate_for_seniority_levels(df, selected_region, selected_job_field, seniority_levels, selected_time_period):
+
+def separate_for_seniority_levels(
+    df, selected_region, selected_job_field, seniority_levels, selected_time_period
+):
     count_seniority_levels = []
     for level in seniority_levels:
-        df_seniority_level = filter_jobs_by_selectbox(df, selected_region, selected_job_field, level)
-        level_count = total_jobs_per_time_frequency(df_seniority_level, selected_time_period)
+        df_seniority_level = filter_jobs_by_selectbox(
+            df, selected_region, selected_job_field, level
+        )
+        level_count = total_jobs_per_time_frequency(
+            df_seniority_level, selected_time_period
+        )
         count_seniority_levels.append(level_count)
     return count_seniority_levels
+
 
 def top_10_companies_by_selectbox(filtered_df):
     company_job_counts_field = (
@@ -114,6 +117,7 @@ def top_10_companies_by_region_and_time_period(
     top_15_companies_region = company_job_counts_region.nlargest(10, "job_count")
 
     return top_15_companies_region
+
 
 def total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
     df, selected_region, selected_time_period, seniority_levels
@@ -184,4 +188,3 @@ def total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
     )
 
     return job_counts_by_region, sorted_regions
-

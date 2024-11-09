@@ -4,7 +4,9 @@ import streamlit as st
 def sidebar_selectbox_country(countries, default_country_index):
     countries = [country[0].upper() + country[1:] for country in countries]
     st.sidebar.header("Filters")
-    selected_country = st.sidebar.selectbox("Select country", options=countries, index=default_country_index)
+    selected_country = st.sidebar.selectbox(
+        "Select country", options=countries, index=default_country_index
+    )
     return selected_country.lower()
 
 
@@ -38,10 +40,17 @@ def sidebar_selectbox_rest(
         with time_period_col:
             selected_time_period = st.sidebar.selectbox(
                 "Select time period",
-                options=['Past ' + item if item != 'Any time' else item for item in time_periods],
+                options=[
+                    "Past " + item if item != "Any time" else item
+                    for item in time_periods
+                ],
                 index=default_time_period_index,
             )
-            selected_time_period = selected_time_period[selected_time_period.find(' ')+1:] if selected_time_period != 'Any time' else selected_time_period
+            selected_time_period = (
+                selected_time_period[selected_time_period.find(" ") + 1 :]
+                if selected_time_period != "Any time"
+                else selected_time_period
+            )
 
     return (
         selected_region,
@@ -49,6 +58,7 @@ def sidebar_selectbox_rest(
         selected_seniority_level,
         selected_time_period,
     )
+
 
 def sidebar_put_result(filtered_df):
     total_jobs_by_selectbox = filtered_df.shape[0]

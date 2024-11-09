@@ -9,12 +9,12 @@ import os
 
 if __name__ == "__main__":
     app_path = os.path.dirname(os.path.abspath(__file__))
-    app_path += '/../..'
+    app_path += "/../.."
 
     st.set_page_config(page_title="LinkedIn Job Analysis", layout="wide")
 
     st.markdown(
-    """
+        """
     <style>
         .reportview-container {
             padding: 0;
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     <h1 style='text-align: center;'>LinkedIn Job Analysis Dashboard</h1>
     <p style='text-align: center;'>The data below updates daily and reflects the current job postings.</p>
     """,
-    unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
     # For running locally
@@ -103,8 +103,10 @@ if __name__ == "__main__":
     sidebar_put_result(filtered_df)
 
     job_counts = total_jobs_per_time_frequency(df, selected_time_period)
-    
-    count_seniority_levels = separate_for_seniority_levels(df, selected_region, selected_job_field, seniority_levels, selected_time_period)
+
+    count_seniority_levels = separate_for_seniority_levels(
+        df, selected_region, selected_job_field, seniority_levels, selected_time_period
+    )
 
     top_10_companies_selectbox = top_10_companies_by_selectbox(filtered_df)
     top_10_companies_field = top_10_companies_by_job_field_and_time_period(
@@ -129,13 +131,28 @@ if __name__ == "__main__":
 
     col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
     with col_pie_selectbox, st.container(border=True):
-        plot_pie_top_companies_seletbox(top_10_companies_selectbox, selected_region, selected_job_field, selected_seniority_level, selected_time_period)
+        plot_pie_top_companies_seletbox(
+            top_10_companies_selectbox,
+            selected_region,
+            selected_job_field,
+            selected_seniority_level,
+            selected_time_period,
+        )
     with col_bar_selectbox, st.container(border=True):
-        plot_lines_total_jobs_selectbox_per_seniority_level(count_seniority_levels, selected_region, selected_job_field, seniority_levels, selected_time_period, color_mapping)
+        plot_lines_total_jobs_selectbox_per_seniority_level(
+            count_seniority_levels,
+            selected_region,
+            selected_job_field,
+            seniority_levels,
+            selected_time_period,
+            color_mapping,
+        )
 
     col_pie_region, col_bar_region = st.columns([1, 2])
     with col_pie_region, st.container(border=True):
-        plot_pie_top_companies_region(top_10_companies_region, selected_region, selected_time_period)
+        plot_pie_top_companies_region(
+            top_10_companies_region, selected_region, selected_time_period
+        )
     with col_bar_region, st.container(border=True):
         plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels_over_selected_time(
             job_counts_by_field,
@@ -143,12 +160,14 @@ if __name__ == "__main__":
             color_sequence,
             sorted_job_fields,
             seniority_levels,
-            selected_time_period
+            selected_time_period,
         )
-    
+
     col_pie_job_field, col_bar_job_field = st.columns([1, 2])
     with col_pie_job_field, st.container(border=True):
-        plot_pie_top_companies_field(top_10_companies_field, selected_job_field, selected_time_period)
+        plot_pie_top_companies_field(
+            top_10_companies_field, selected_job_field, selected_time_period
+        )
     with col_bar_job_field, st.container(border=True):
         plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels_over_selected_time(
             job_counts_by_region,
@@ -156,5 +175,5 @@ if __name__ == "__main__":
             color_sequence,
             sorted_regions,
             seniority_levels,
-            selected_time_period
+            selected_time_period,
         )
