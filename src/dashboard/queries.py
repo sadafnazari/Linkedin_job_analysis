@@ -143,9 +143,9 @@ def top_10_companies_by_selectbox(filtered_df):
     company_job_counts_field = (
         filtered_df.groupby("company").size().reset_index(name="job_count")
     )
-    top_15_companies_selectbox = company_job_counts_field.nlargest(10, "job_count")
+    top_10_companies_selectbox = company_job_counts_field.nlargest(10, "job_count")
 
-    return top_15_companies_selectbox
+    return top_10_companies_selectbox
 
 
 def top_10_companies_by_job_field_and_time_period(
@@ -176,9 +176,9 @@ def top_10_companies_by_job_field_and_time_period(
     company_job_counts_field = (
         company_job_counts_field.groupby("company").size().reset_index(name="job_count")
     )
-    top_15_companies_field = company_job_counts_field.nlargest(10, "job_count")
+    top_10_companies_field = company_job_counts_field.nlargest(10, "job_count")
 
-    return top_15_companies_field
+    return top_10_companies_field
 
 
 def top_10_companies_by_region_and_time_period(
@@ -211,9 +211,9 @@ def top_10_companies_by_region_and_time_period(
         .size()
         .reset_index(name="job_count")
     )
-    top_15_companies_region = company_job_counts_region.nlargest(10, "job_count")
+    top_10_companies_region = company_job_counts_region.nlargest(10, "job_count")
 
-    return top_15_companies_region
+    return top_10_companies_region
 
 
 def total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
