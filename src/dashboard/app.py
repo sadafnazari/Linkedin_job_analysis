@@ -36,7 +36,7 @@ if __name__ == "__main__":
     # df = load_data_local(f"{app_path}/data/jobs.db")
 
     # For running on cloud
-    df = load_data_cloud(f"{app_path}/data/jobs.db")
+    df = load_data_cloud()
 
     countries = load_countries(app_path)
     default_country = "finland"

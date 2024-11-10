@@ -1,12 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-import io
-import os
-
+import psycopg2
 
 @st.cache_data(ttl=43200)  # Cache data for 12 hours
 def load_data_local(db_path):
@@ -17,44 +12,29 @@ def load_data_local(db_path):
 
 
 @st.cache_data(ttl=43200)  # Cache data for 12 hours
-def load_data_cloud(db_path):
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["google_api"]
-    )
-    drive_service = build("drive", "v3", credentials=credentials)
+def load_data_cloud():
+    # Get credentials from Streamlit's secrets management
+    user = st.secrets["postgres"]["user"]
+    password = st.secrets["postgres"]["password"]
+    dbname = st.secrets["postgres"]["dbname"]
+    host = st.secrets["postgres"]["host"]
+    port = st.secrets["postgres"]["port"]
 
-    query = f"fullText contains '{st.secrets["database"]['FILE_ID']}'"
-    results = drive_service.files().list(q=query, fields="files(id, name, description)").execute()
-    files = results.get("files", [])
+    # Construct the connection URL
+    connection_url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
 
-    if not files:
-        st.error("No files found with the custom file ID in the description.")
-        return None
+    # Create a SQLAlchemy engine
+    engine = create_engine(connection_url)
 
-    file = files[0]
-    file_id = file["id"]
-
-    request = drive_service.files().get_media(fileId=file_id)
-    file_data = io.BytesIO()
-    
-    downloader = MediaIoBaseDownload(file_data, request)
-    done = False
-    while not done:
-        status, done = downloader.next_chunk()
-        print(f"Download progress: {int(status.progress() * 100)}%")
-    
-    file_data.seek(0)
-    with open(db_path, "wb") as f:
-        f.write(file_data.read())
-
-    # Load data into DataFrame using SQLAlchemy
-    engine = create_engine(f"sqlite:///{db_path}")
-    with engine.connect() as connection:
-        query = """
+    # SQL query to retrieve the data
+    query = """
         SELECT date_posted, job_fields, region, country, seniority_level, company
         FROM jobs
         WHERE seniority_level != 'Not Applicable' AND region != 'Unspecified'
-        """
-        df = pd.read_sql(query, connection)
-    
+    """
+
+    # Execute the query and store the result in a DataFrame
+    df = pd.read_sql(query, engine)
+
+    # Return the DataFrame
     return df
