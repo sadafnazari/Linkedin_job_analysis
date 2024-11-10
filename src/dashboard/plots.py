@@ -102,19 +102,19 @@ def plot_lines_total_jobs_selectbox_per_seniority_level(
 
 
 def plot_pie_top_companies_seletbox(
-    top_15_companies_selectbox,
+    top_10_companies_selectbox,
     selected_region,
     selected_job_field,
     selected_seniority_level,
     selected_time_period,
 ):
     """
-    Plots a pie chart showing the top 15 companies with the highest number of job postings.
+    Plots a pie chart showing the top 10 companies with the highest number of job postings.
 
-    This function generates a pie chart that displays the distribution of job postings across the top 15 companies.
+    This function generates a pie chart that displays the distribution of job postings across the top 10 companies.
 
     Parameters:
-    top_15_companies_selectbox (pandas.DataFrame): A DataFrame containing the job count data for the top 15 companies.
+    top_10_companies_selectbox (pandas.DataFrame): A DataFrame containing the job count data for the top 10 companies.
                                                   It must include columns for the company name ('company') and the 
                                                   number of job postings ('job_count').
     selected_region (str): The region for which the job data is displayed.
@@ -126,7 +126,7 @@ def plot_pie_top_companies_seletbox(
     None: This function does not return a value. It directly renders the pie chart using Streamlit's plotly_chart function.
     """
     pie_top_companies_selectbox = px.pie(
-        top_15_companies_selectbox,
+        top_10_companies_selectbox,
         names="company",
         values="job_count",
         title=f"10 most recruiting companies",
@@ -154,18 +154,18 @@ def plot_pie_top_companies_seletbox(
 
 
 def plot_pie_top_companies_field(
-    top_15_companies_field, selected_job_field, selected_time_period
+    top_10_companies_field, selected_job_field, selected_time_period
 ):
     """
-    Plots a pie chart showing the top 15 companies with the highest number of job postings
+    Plots a pie chart showing the top 05 companies with the highest number of job postings
     for a specific job field and time period.
 
     This function generates a pie chart displaying the distribution of job postings across 
-    the top 15 companies for the selected job field and time period.
+    the top 10 companies for the selected job field and time period.
 
     Parameters:
-    top_15_companies_field (pandas.DataFrame): A DataFrame containing the job count data 
-                                                for the top 15 companies in the selected 
+    top_10_companies_field (pandas.DataFrame): A DataFrame containing the job count data 
+                                                for the top 10 companies in the selected 
                                                 job field. It must include columns for 
                                                 the company name ('company') and the 
                                                 number of job postings ('job_count').
@@ -176,7 +176,7 @@ def plot_pie_top_companies_field(
     None: This function does not return a value. It directly renders the pie chart using Streamlit's plotly_chart function.
     """
     pie_top_companies_field = px.pie(
-        top_15_companies_field,
+        top_10_companies_field,
         names="company",
         values="job_count",
         title=f"10 most recruiting companies",
@@ -204,18 +204,18 @@ def plot_pie_top_companies_field(
 
 
 def plot_pie_top_companies_region(
-    top_15_companies_region, selected_region, selected_time_period
+    top_10_companies_region, selected_region, selected_time_period
 ):
     """
-    Plots a pie chart showing the top 15 companies with the highest number of job postings
+    Plots a pie chart showing the top 10 companies with the highest number of job postings
     in a selected region, across all job fields, for a specific time period.
 
     This function generates a pie chart displaying the distribution of job postings across 
-    the top 15 companies in the selected region and time period.
+    the top 10 companies in the selected region and time period.
 
     Parameters:
-    top_15_companies_region (pandas.DataFrame): A DataFrame containing the job count data 
-                                                for the top 15 companies in the selected 
+    top_10_companies_region (pandas.DataFrame): A DataFrame containing the job count data 
+                                                for the top 10 companies in the selected 
                                                 region. It must include columns for 
                                                 the company name ('company') and the 
                                                 number of job postings ('job_count').
@@ -226,7 +226,7 @@ def plot_pie_top_companies_region(
     None: This function does not return a value. It directly renders the pie chart using Streamlit's plotly_chart function.
     """
     pie_top_companies_region = px.pie(
-        top_15_companies_region,
+        top_10_companies_region,
         names="company",
         values="job_count",
         title=f"10 most recruiting companies",
