@@ -22,6 +22,7 @@ class LinkedinJobSearchItem(scrapy.Item):
         description (scrapy.Field): A detailed description of the job and its responsibilities.
         job_url (scrapy.Field): The URL of the job posting on LinkedIn.
     """
+
     date_posted = scrapy.Field()
     title = scrapy.Field()
     company = scrapy.Field()

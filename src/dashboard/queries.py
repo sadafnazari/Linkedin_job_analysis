@@ -1,3 +1,5 @@
+# queries.py
+"""This module provides functions for different queries that the application requires."""
 import pandas as pd
 
 
@@ -5,7 +7,7 @@ def total_jobs_per_time_frequency(df, selected_time_period):
     """
     A query to calculate the total number of jobs posted, grouped by the specified time period (day, week, month, or year).
 
-    Parameters:
+    Args:
     df (pandas.DataFrame): The DataFrame containing job data, including the `date_posted` column.
     selected_time_period (str): The time period to group the data by. It can be one of the following:
         - "day": Groups data by day.
@@ -52,10 +54,10 @@ def total_jobs_per_time_frequency(df, selected_time_period):
 
 def filter_by_time_period(df, time_period):
     """
-    A query to filter the DataFrame based on the selected time period, returning only rows where the 'date_posted' 
+    A query to filter the DataFrame based on the selected time period, returning only rows where the 'date_posted'
     is within the specified period.
 
-    Parameters:
+    Args:
     df (pandas.DataFrame): The DataFrame containing job data with a 'date_posted' column.
     time_period (str): The time period to filter the data by. It can be one of the following:
         - "Any time": No filtering, returns all data.
@@ -85,7 +87,7 @@ def filter_jobs_by_selectbox(
     """
     A query to filter the DataFrame based on selected filters from the selectbox: region, job field, and seniority level.
 
-    Parameters:
+    Args:
     df (pandas.DataFrame): The DataFrame containing job data with 'region', 'job_fields', and 'seniority_level' columns.
     selected_region (str): The region to filter the jobs by.
     selected_job_field (str): The job field to filter the jobs by.
@@ -108,7 +110,7 @@ def separate_for_seniority_levels(
     """
     A query to separate job counts by seniority level for a selected region, job field, and time period.
 
-    Parameters:
+    Args:
     df (pandas.DataFrame): The DataFrame containing job data.
     selected_region (str): The region to filter the jobs by.
     selected_job_field (str): The job field to filter the jobs by.
@@ -134,7 +136,7 @@ def top_10_companies_by_selectbox(filtered_df):
     """
     A query to compute the top 10 companies with the most job postings based on selected filters from the selectbox.
 
-    Parameters:
+    Args:
     filtered_df (pandas.DataFrame): A DataFrame containing job data, including a 'company' column.
 
     Returns:
@@ -152,18 +154,18 @@ def top_10_companies_by_job_field_and_time_period(
     df, selected_job_field, selected_time_period
 ):
     """
-    A query to retrieve the top 10 companies posting jobs in the selected job field 
-    within a specified time period. This function then filters the DataFrame by the job field and time period, 
+    A query to retrieve the top 10 companies posting jobs in the selected job field
+    within a specified time period. This function then filters the DataFrame by the job field and time period,
     groups by company, and counts the number of job postings per company.
 
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing job data, including 'company', 'job_fields', 
+    Args:
+    df (pandas.DataFrame): The DataFrame containing job data, including 'company', 'job_fields',
                             and 'date_posted' columns.
     selected_job_field (str): The job field to filter the data by.
     selected_time_period (str): The time period for filtering job postings (e.g., "year", "month").
 
     Returns:
-    pandas.DataFrame: A DataFrame containing the top 10 companies with the most job postings 
+    pandas.DataFrame: A DataFrame containing the top 10 companies with the most job postings
                        in the selected job field and time period.
     """
     company_job_counts_field = df[
@@ -185,18 +187,18 @@ def top_10_companies_by_region_and_time_period(
     df, selected_region, selected_time_period
 ):
     """
-    A query to retrieve the top 10 companies posting jobs in the selected region 
-    within a specified time period. The function then filters the DataFrame by region and time period, 
+    A query to retrieve the top 10 companies posting jobs in the selected region
+    within a specified time period. The function then filters the DataFrame by region and time period,
     groups by company, and counts the number of job postings per company.
 
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing job data, including 'company', 'region', 
+    Args:
+    df (pandas.DataFrame): The DataFrame containing job data, including 'company', 'region',
                             and 'date_posted' columns.
     selected_region (str): The region to filter the data by.
     selected_time_period (str): The time period for filtering job postings (e.g., "year", "month").
 
     Returns:
-    pandas.DataFrame: A DataFrame containing the top 10 companies with the most job postings 
+    pandas.DataFrame: A DataFrame containing the top 10 companies with the most job postings
                        in the selected region and time period.
     """
     company_job_counts_region = df[df["region"] == selected_region][
@@ -223,15 +225,15 @@ def total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
     A query to calculate the total number of jobs for a selected region and time period across all job fields and seniority levels.
     The function then returns the job counts by field, seniority level, and the sorted list of job fields based on total job count.
 
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing job data with columns such as 
+    Args:
+    df (pandas.DataFrame): The DataFrame containing job data with columns such as
                             'region', 'job_fields', 'seniority_level', and 'date_posted'.
     selected_region (str): The region to filter the data by.
     selected_time_period (str): The time period to filter the job postings (e.g., "year", "month").
     seniority_levels (list): The list of seniority levels for ordering the data.
 
     Returns:
-    pandas.DataFrame: A DataFrame with job counts for each job field and seniority level in the selected region 
+    pandas.DataFrame: A DataFrame with job counts for each job field and seniority level in the selected region
                        and time period.
     list: A sorted list of job fields based on the total number of job postings.
     """
@@ -276,15 +278,15 @@ def total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
     A query to calculate the total number of jobs for a given job field and time period across all regions and seniority levels.
     The function then returns the job counts by region and seniority level along with the sorted list of regions based on total job count.
 
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing job data with columns such as 
+    Args:
+    df (pandas.DataFrame): The DataFrame containing job data with columns such as
                             'region', 'job_fields', 'seniority_level', and 'date_posted'.
     selected_job_field (str): The job field to filter the data by.
     selected_time_period (str): The time period to filter the job postings (e.g., "year", "month").
     seniority_levels (list): The list of seniority levels for ordering the data.
 
     Returns:
-    pandas.DataFrame: A DataFrame with job counts for each region and seniority level in the selected 
+    pandas.DataFrame: A DataFrame with job counts for each region and seniority level in the selected
                        job field and time period.
     list: A sorted list of regions based on the total number of job postings.
     """

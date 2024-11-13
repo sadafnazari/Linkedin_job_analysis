@@ -1,11 +1,19 @@
-from load_data import *
-from load_defaults import *
-from pre_processing import *
-from load_resources import *
-from queries import *
-from plots import *
-from sidebar import *
+# app.py
+"""
+
+This is the main module for visualizing data with streamlit.
+"""
+
 import os
+
+import load_resources as loader
+import plots as ps
+import queries as qs
+import sidebar as sb
+import streamlit as st
+from load_data import load_data
+from load_defaults import load_defaults
+from pre_processing import pre_processing
 
 if __name__ == "__main__":
     app_path = os.path.dirname(os.path.abspath(__file__))
@@ -27,30 +35,28 @@ if __name__ == "__main__":
         }
     </style>
     <h1 style='text-align: center;'>LinkedIn Job Analysis Dashboard</h1>
-    <p style='text-align: center;'>The data below updates daily and reflects the current job postings.</p>
+    <p style='text-align: center;'>
+        The data below updates daily and reflects the current job postings.
+    </p>
     """,
         unsafe_allow_html=True,
     )
 
-    # For running locally
-    # df = load_data_local(f"{app_path}/data/jobs.db")
+    df = load_data()
 
-    # For running on cloud
-    df = load_data_cloud()
-
-    countries = load_countries(app_path)
+    countries = loader.load_countries(app_path)
     default_country = "finland"
     default_country_index = (
         countries.index(default_country) if default_country in countries else 0
     )
-    selected_country = sidebar_selectbox_country(countries, default_country_index)
+    selected_country = sb.sidebar_selectbox_country(countries, default_country_index)
 
     df = pre_processing(df, selected_country)
 
-    regions = load_regions(app_path, selected_country)
-    job_fields = load_job_fields(app_path, selected_country)
-    seniority_levels = load_seniority_levels(app_path, selected_country)
-    time_periods = load_time_periods(app_path, selected_country)
+    regions = loader.load_regions(app_path, selected_country)
+    job_fields = loader.load_job_fields(app_path, selected_country)
+    seniority_levels = loader.load_seniority_levels(app_path, selected_country)
+    time_periods = loader.load_time_periods(app_path, selected_country)
 
     default_region, default_job_field, default_seniority_level, default_time_period = (
         load_defaults(app_path, selected_country)
@@ -82,7 +88,7 @@ if __name__ == "__main__":
         selected_job_field,
         selected_seniority_level,
         selected_time_period,
-    ) = sidebar_selectbox_rest(
+    ) = sb.sidebar_selectbox_rest(
         regions,
         job_fields,
         seniority_levels,
@@ -93,45 +99,45 @@ if __name__ == "__main__":
         default_time_period_index,
     )
 
-    filtered_df = filter_jobs_by_selectbox(
+    filtered_df = qs.filter_jobs_by_selectbox(
         df,
         selected_region,
         selected_job_field,
         selected_seniority_level,
     )
-    filtered_df = filter_by_time_period(filtered_df, selected_time_period)
-    sidebar_put_result(filtered_df)
+    filtered_df = qs.filter_by_time_period(filtered_df, selected_time_period)
+    sb.sidebar_put_result(filtered_df)
 
-    job_counts = total_jobs_per_time_frequency(df, selected_time_period)
+    job_counts = qs.total_jobs_per_time_frequency(df, selected_time_period)
 
-    count_seniority_levels = separate_for_seniority_levels(
+    count_seniority_levels = qs.separate_for_seniority_levels(
         df, selected_region, selected_job_field, seniority_levels, selected_time_period
     )
 
-    top_10_companies_selectbox = top_10_companies_by_selectbox(filtered_df)
-    top_10_companies_field = top_10_companies_by_job_field_and_time_period(
+    top_10_companies_selectbox = qs.top_10_companies_by_selectbox(filtered_df)
+    top_10_companies_field = qs.top_10_companies_by_job_field_and_time_period(
         df, selected_job_field, selected_time_period
     )
-    top_10_companies_region = top_10_companies_by_region_and_time_period(
+    top_10_companies_region = qs.top_10_companies_by_region_and_time_period(
         df, selected_region, selected_time_period
     )
 
     job_counts_by_field, sorted_job_fields = (
-        total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
+        qs.total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
             df, selected_region, selected_time_period, seniority_levels
         )
     )
     job_counts_by_region, sorted_regions = (
-        total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
+        qs.total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
             df, selected_job_field, selected_time_period, seniority_levels
         )
     )
 
-    plot_line_total_jobs(job_counts, selected_time_period)
+    ps.plot_line_total_jobs(job_counts, selected_time_period)
 
     col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
     with col_pie_selectbox, st.container(border=True):
-        plot_pie_top_companies_seletbox(
+        ps.plot_pie_top_companies_seletbox(
             top_10_companies_selectbox,
             selected_region,
             selected_job_field,
@@ -139,7 +145,7 @@ if __name__ == "__main__":
             selected_time_period,
         )
     with col_bar_selectbox, st.container(border=True):
-        plot_lines_total_jobs_selectbox_per_seniority_level(
+        ps.plot_lines_total_jobs_selectbox_per_seniority_level(
             count_seniority_levels,
             selected_region,
             selected_job_field,
@@ -150,11 +156,11 @@ if __name__ == "__main__":
 
     col_pie_region, col_bar_region = st.columns([1, 2])
     with col_pie_region, st.container(border=True):
-        plot_pie_top_companies_region(
+        ps.plot_pie_top_companies_region(
             top_10_companies_region, selected_region, selected_time_period
         )
     with col_bar_region, st.container(border=True):
-        plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels_over_selected_time(
+        ps.plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels_over_selected_time(
             job_counts_by_field,
             selected_region,
             color_sequence,
@@ -165,11 +171,11 @@ if __name__ == "__main__":
 
     col_pie_job_field, col_bar_job_field = st.columns([1, 2])
     with col_pie_job_field, st.container(border=True):
-        plot_pie_top_companies_field(
+        ps.plot_pie_top_companies_field(
             top_10_companies_field, selected_job_field, selected_time_period
         )
     with col_bar_job_field, st.container(border=True):
-        plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels_over_selected_time(
+        ps.plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels_over_selected_time(
             job_counts_by_region,
             selected_job_field,
             color_sequence,

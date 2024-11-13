@@ -1,11 +1,16 @@
+# pre_processing.py
+"""
+This module provides function(s) for pre processing data before retriving
+information from it.
+"""
 import pandas as pd
 
 
 def pre_processing(df, selected_country):
     """
     Pre-processes the data DataFrame by cleaning and filtering based on the selected country.
-    
-    Parameters:
+
+    Args:
     df (pandas.DataFrame): A DataFrame containing job data, including columns such as 'job_fields', 'date_posted', 'country', and 'region'.
     selected_country (str): The country to filter.
 
