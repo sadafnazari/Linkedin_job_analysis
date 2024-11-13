@@ -1,0 +1,53 @@
+repos:
+  # 1. Black - Code Formatter
+  - repo: https://github.com/psf/black
+    rev: 24.10.0 # Use the latest stable version
+    hooks:
+      - id: black
+        args: [--line-length=88]
+        language_version: python3.12.0  # Set your Python version
+
+  # 2. isort - Import Sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+        language_version: python3.12.0
+
+  # 4. mypy - Static Type Checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.0
+    hooks:
+      - id: mypy
+        args: ["--ignore-missing-imports"]
+        language_version: python3.9
+
+  # 5. Check for Mixed Line Endings
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files  # Warn on files > 500KB
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: detect-private-key
+
+  # 6. Pyupgrade - Automatically Upgrade Syntax
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.10.0
+    hooks:
+      - id: pyupgrade
+        args: ["--py39-plus"]
+
+  # 9. Autoflake - Remove Unused Imports
+  - repo: https://github.com/myint/autoflake
+    rev: v2.2.0
+    hooks:
+      - id: autoflake
+        args: ["--remove-all-unused-imports", "--ignore-init-module-imports"]
+        language_version: python3.9

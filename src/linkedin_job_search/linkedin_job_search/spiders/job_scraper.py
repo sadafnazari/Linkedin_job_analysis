@@ -1,7 +1,8 @@
-import scrapy
+import json
 import logging
 import os
-import json
+
+import scrapy
 
 
 class JobScraperSpider(scrapy.Spider):
@@ -13,10 +14,10 @@ class JobScraperSpider(scrapy.Spider):
     allowed_to_continue = True
 
     def __init__(self, *args, **kwargs):
-        super(JobScraperSpider, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         config_file = os.path.join(os.getcwd(), "../../configs/scrapy_config.json")
-        with open(config_file, "r") as f:
+        with open(config_file) as f:
             self.config = json.load(f)
 
         self.country_name = kwargs.get("country")
@@ -60,7 +61,7 @@ class JobScraperSpider(scrapy.Spider):
 
     def parse(self, response):
         if self.counter == 0 and "Join LinkedIn" in response.text:
-            logging.log(logging.DEBUG, f"LOGIN PROMPT DETECTED, RETRYING")
+            logging.log(logging.DEBUG, "LOGIN PROMPT DETECTED, RETRYING")
             yield response.follow(
                 url=response.meta["url"],
                 callback=self.parse,
@@ -71,7 +72,7 @@ class JobScraperSpider(scrapy.Spider):
             return
         urls = response.xpath("//li/div/a/@href").getall()
         if len(urls) == 0 and self.counter == 0:
-            logging.log(logging.DEBUG, f"PAGE DID NOT LOAD CORRECTLY, RETRYING")
+            logging.log(logging.DEBUG, "PAGE DID NOT LOAD CORRECTLY, RETRYING")
             yield response.follow(
                 url=response.meta["url"],
                 callback=self.parse,

@@ -1,12 +1,14 @@
 import datetime
-from bs4 import BeautifulSoup
-import os
-import pandas as pd
-import unicodedata
 import json
-from dotenv import dotenv_values
-import psycopg2
 import logging
+import os
+import unicodedata
+
+import pandas as pd
+import psycopg2
+from bs4 import BeautifulSoup
+from dotenv import dotenv_values
+
 
 class LinkedinJobSearchPipeline:
     def __init__(self, country_name):
@@ -20,7 +22,7 @@ class LinkedinJobSearchPipeline:
             os.getcwd(),
             f"../../resources/{country_name.lower()}/job_fields_{country_name.lower()}.json",
         )
-        with open(config_file_job_fields, "r") as file:
+        with open(config_file_job_fields) as file:
             job_fields = json.load(file)
         self.alternative_to_field = {}
         for field in job_fields:
@@ -218,15 +220,13 @@ class LinkedinJobSearchPipeline:
 
 class PostgresPipeline:
     def __init__(self):
-        secrets = dotenv_values(os.path.join(
-            os.getcwd(),
-            f"../../configs/.env"))
+        secrets = dotenv_values(os.path.join(os.getcwd(), "../../configs/.env"))
         self.user = secrets["POSTGRES_USER"]
         self.password = secrets["POSTGRES_PASSWORD"]
         self.host = secrets["POSTGRES_HOST"]
         self.port = secrets["POSTGRES_PORT"]
         self.dbname = secrets["POSTGRES_DBNAME"]
-    
+
     def open_spider(self, spider):
         try:
             self.conn = psycopg2.connect(
@@ -234,12 +234,13 @@ class PostgresPipeline:
                 user=self.user,
                 password=self.password,
                 host=self.host,
-                port=self.port
+                port=self.port,
             )
             self.cursor = self.conn.cursor()
             logging.log(logging.DEBUG, "Successfully connected to PostgreSQL")
-    
-            self.cursor.execute("""
+
+            self.cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS jobs (
                     date_posted TEXT,
                     title TEXT,
@@ -256,12 +257,13 @@ class PostgresPipeline:
                     description TEXT,
                     job_url TEXT
                 );
-            """)
+            """
+            )
             self.conn.commit()
         except psycopg2.Error as e:
             logging.log(logging.ERROR, f"Failed to connect to PostgreSQL: {e}")
             raise e
-    
+
     def close_spider(self, spider):
         if self.conn:
             self.conn.commit()
@@ -271,29 +273,31 @@ class PostgresPipeline:
 
     def process_item(self, item, spider):
         try:
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                 INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniority_level,employment_type,job_function,job_fields,industries,description,job_url)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (
-                item["date_posted"],
-                item["title"],
-                item["company"],
-                item["location"],
-                item["city"],
-                item["region"],
-                item["country"],
-                item["seniority_level"],
-                item["employment_type"],
-                item["job_function"],
-                item["job_fields"],
-                item["industries"],
-                item["description"],
-                item["job_url"],
-            ))
+            """,
+                (
+                    item["date_posted"],
+                    item["title"],
+                    item["company"],
+                    item["location"],
+                    item["city"],
+                    item["region"],
+                    item["country"],
+                    item["seniority_level"],
+                    item["employment_type"],
+                    item["job_function"],
+                    item["job_fields"],
+                    item["industries"],
+                    item["description"],
+                    item["job_url"],
+                ),
+            )
 
             self.conn.commit()
 
         except psycopg2.Error as e:
             logging.error(f"Error inserting data: {e}")
         return item
-    

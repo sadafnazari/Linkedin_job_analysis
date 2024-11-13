@@ -1,3 +1,5 @@
+# settings.py
+
 BOT_NAME = "linkedin_job_search"
 
 SPIDER_MODULES = ["linkedin_job_search.spiders"]
