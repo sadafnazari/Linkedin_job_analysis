@@ -52,7 +52,7 @@ def total_jobs_per_time_frequency(df, selected_time_period):
     return job_counts
 
 
-def filter_by_time_period(df, time_period):
+def filter_by_time_period(df, time_period, quantity=1):
     """
     A query to filter the DataFrame based on the selected time period, returning only rows where the 'date_posted'
     is within the specified period.
@@ -72,13 +72,21 @@ def filter_by_time_period(df, time_period):
     if time_period == "Any time":
         return df
     elif time_period == "year":
-        return df[df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(years=1)]
+        return df[
+            df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(years=quantity)
+        ]
     elif time_period == "month":
-        return df[df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(months=1)]
+        return df[
+            df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(months=quantity)
+        ]
     elif time_period == "week":
-        return df[df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(weeks=1)]
+        return df[
+            df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(weeks=quantity)
+        ]
     elif time_period == "day":
-        return df[df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(days=1)]
+        return df[
+            df["date_posted"] >= pd.Timestamp.now() - pd.DateOffset(days=quantity)
+        ]
 
 
 def filter_jobs_by_selectbox(

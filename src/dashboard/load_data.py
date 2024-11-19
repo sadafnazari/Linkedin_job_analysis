@@ -35,7 +35,7 @@ def load_data():
 
     query = """
         SELECT
-        date_posted, job_fields, region, country, seniority_level, company
+        date_posted, title, company, region, country, seniority_level, job_fields, job_url
         FROM jobs
         WHERE seniority_level != 'Not Applicable' AND region != 'Unspecified'
     """
