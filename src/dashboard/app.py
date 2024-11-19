@@ -14,6 +14,7 @@ import streamlit as st
 from load_data import load_data
 from load_defaults import load_defaults
 from pre_processing import pre_processing
+from tables import create_df_latest_jobs
 
 if __name__ == "__main__":
     app_path = os.path.dirname(os.path.abspath(__file__))
@@ -108,6 +109,8 @@ if __name__ == "__main__":
     filtered_df = qs.filter_by_time_period(filtered_df, selected_time_period)
     sb.sidebar_put_result(filtered_df)
 
+    filtered_df_past_week = qs.filter_by_time_period(filtered_df, "week", 1)
+
     job_counts = qs.total_jobs_per_time_frequency(df, selected_time_period)
 
     count_seniority_levels = qs.separate_for_seniority_levels(
@@ -133,7 +136,11 @@ if __name__ == "__main__":
         )
     )
 
-    ps.plot_line_total_jobs(job_counts, selected_time_period)
+    tab_total_jobs, tab_latest_jobs = st.tabs(["Analysis", "Latest jobs"])
+    with tab_total_jobs, st.container(border=True):
+        ps.plot_line_total_jobs(job_counts, selected_time_period)
+    with tab_latest_jobs, st.container(border=True):
+        create_df_latest_jobs(filtered_df_past_week, selected_job_field)
 
     col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
     with col_pie_selectbox, st.container(border=True):

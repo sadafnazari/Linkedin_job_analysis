@@ -1,3 +1,5 @@
+# sidebar.py
+"""This module provides functions for rendering the sidebar menu."""
 import streamlit as st
 
 
@@ -5,7 +7,7 @@ def sidebar_selectbox_country(countries, default_country_index):
     """
     This function generates a selectbox in the sidebar menu for the user to choose a country.
 
-    Parameters:
+    Args:
     countries (list): A list of countries as strings to display in the selectbox.
     default_country_index (int): The index of the default country to pre-select in the selectbox.
 
@@ -34,7 +36,7 @@ def sidebar_selectbox_rest(
     This function creates a set of selectboxes in the side menu for filtering data by region, job field,
     seniority level, and time period.
 
-    Parameters:
+    Args:
     - regions (list): A list of available regions to select from.
     - job_fields (list): A list of job fields to select from.
     - seniority_levels (list): A list of seniority levels to select from.
@@ -91,7 +93,7 @@ def sidebar_put_result(filtered_df):
     """
     This function writes out the total number of jobs for the selected values in the side menu selectboxes
 
-    Parameters:
+    Args:
     filtered_df (pandas.DataFrame): A DataFrame containing the job data that is filtered based on the selected filters in the side menu selectboxes.
 
     This function does not return a value. It directly writes the total number of jobs with Streamlit.

@@ -11,7 +11,7 @@ The dashobard provides insights on the job market on a country level (currently 
 - Demonstrating total number of jobs over a certain period (daily, weekly, monthly, yearly).
 - Demonstrating the companies with highest recruiting companies based on filters on the region, job field, seniority level and time period.
 - Demonstrating the demand for jobs based on selected filters.
-
+- Demonstrating the latest job posts.
 
 ## Usage
 
