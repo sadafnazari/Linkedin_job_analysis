@@ -42,10 +42,12 @@ def create_df_latest_jobs(df, selected_job_field):
             "date_posted": st.column_config.DateColumn(
                 "Date posted", format="DD.MM.YYYY"
             ),
-            "title": st.column_config.TextColumn("Title"),
+            "title": st.column_config.TextColumn("Title", width="medium"),
             "company": st.column_config.TextColumn("Company"),
             "region": st.column_config.TextColumn("Region"),
-            "seniority_level": st.column_config.TextColumn("Seniority level"),
+            "seniority_level": st.column_config.TextColumn(
+                "Seniority level",
+            ),
             "job_fields": st.column_config.ListColumn("Job field"),
             "job_url": st.column_config.LinkColumn("Job url", display_text="View job"),
         },
