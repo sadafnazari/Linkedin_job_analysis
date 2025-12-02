@@ -196,9 +196,10 @@
     ],
     "periods":
     {
-        "daily": "r86400",
-        "weekly": "r604800",
-        "monthly": "r2592000",
+        "past_2_hours": "r7200",
+        "past_24_hours": "r86400",
+        "past_week": "r604800",
+        "past_month": "r2592000",
         "any_time": ""
     },
     "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
