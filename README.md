@@ -15,7 +15,7 @@ This project has two parts:
 
 - While the project is defined to be as generalized as possible, the current functionalities have been tested on Finland job market.
 
-- LinkedIn has set a limit on the publicly available jobs number, and only allows scraping the first 1000 jobs.
+- LinkedIn enforces a 1000-result limit per search query. For comprehensive data collection, use overlapping time windows to ensure complete coverage.
 
 ## References
 
