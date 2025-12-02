@@ -284,7 +284,6 @@ class PostgresPipeline:
             
             if self.cursor.fetchone():
                 # Job already exists for today, skip insertion
-                self.duplicates_count += 1
                 logging.log(
                     logging.DEBUG,
                     f"Duplicate job skipped (same URL on {date_part}): {item['job_url']}"
