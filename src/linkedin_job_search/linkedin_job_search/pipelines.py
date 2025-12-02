@@ -259,6 +259,7 @@ class PostgresPipeline:
                 );
             """
             )
+            
             self.conn.commit()
         except psycopg2.Error as e:
             logging.log(logging.ERROR, f"Failed to connect to PostgreSQL: {e}")
@@ -273,6 +274,24 @@ class PostgresPipeline:
 
     def process_item(self, item, spider):
         try:
+            # Check if job_url already exists for today (same date)
+            date_part = item["date_posted"].split()[0] if item["date_posted"] else None
+            
+            self.cursor.execute(
+                "SELECT 1 FROM jobs WHERE job_url = %s AND date_posted LIKE %s LIMIT 1",
+                (item["job_url"], f"{date_part}%")
+            )
+            
+            if self.cursor.fetchone():
+                # Job already exists for today, skip insertion
+                self.duplicates_count += 1
+                logging.log(
+                    logging.DEBUG,
+                    f"Duplicate job skipped (same URL on {date_part}): {item['job_url']}"
+                )
+                return item
+            
+            # Insert new job
             self.cursor.execute(
                 """
                 INSERT INTO jobs (date_posted,title,company,location,city,region,country,seniority_level,employment_type,job_function,job_fields,industries,description,job_url)

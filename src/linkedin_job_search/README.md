@@ -1,6 +1,6 @@
 # LinkedIn Job Search
 
-Scrapes the linkedin job posts on a country level.
+Scrapes the linkedin job posts based on a given country.
 
 ## Introduction
 
@@ -30,15 +30,18 @@ The process can be done by calling the scraper to crawl the data with the follow
 Two arguments should be given to the scraper:
 - country: the name of the country. If it has more than one word, just replace the `space` with `_`. e.g. `New_Zealand`.
 - period: the basis for the scraper to look for. options are:
-  - `daily`
-  - `weekly`
-  -  `monthly`
+  - `past_two_hours`
+  - `past_24_hours`
+  - `past_week`
+  - `past_month`
   - `any_time`
 
 ```bash
 cd src/linkedin_job_search
-scrapy crawl job_scraper -a country=finland -a period=daily
+scrapy crawl job_scraper -a country=finland -a period=past_two_hours
 ```
+
+Note: LinkedIn has a 1000-result limit per search query. For larger datasets, use overlapping time windows to ensure complete coverage.
 
 Running the scraper periodically can be done with `crontab` job with the `run_scrapy.sh` helper script.
 
@@ -48,5 +51,5 @@ crontab -e
 ```
 Then, add the job and modify the command:
 ```bash
-00 24 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs.log 2>&1
+0 */2 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs.log 2>&1
 ```
