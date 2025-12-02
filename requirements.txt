@@ -1,4 +1,4 @@
-scrapy==2.11.2
+scrapy==2.13.4
 beautifulsoup4==4.12.3
 black==24.8.0
 flake8==7.1.1
