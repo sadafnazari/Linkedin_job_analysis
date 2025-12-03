@@ -242,7 +242,7 @@ class PostgresPipeline:
             self.cursor.execute(
                 """
                 CREATE TABLE IF NOT EXISTS jobs (
-                    date_posted TEXT,
+                    date_posted TIMESTAMP,
                     title TEXT,
                     company TEXT,
                     location TEXT,
@@ -274,19 +274,25 @@ class PostgresPipeline:
 
     def process_item(self, item, spider):
         try:
-            # Check if job_url already exists for today (same date)
-            date_part = item["date_posted"].split()[0] if item["date_posted"] else None
-            
+            # Calculate the 2-hour cutoff for deduplication
+            two_hours_ago = datetime.datetime.now() - datetime.timedelta(hours=2)
+
+            # Check if the job URL already exists within the past 2 hours
             self.cursor.execute(
-                "SELECT 1 FROM jobs WHERE job_url = %s AND date_posted LIKE %s LIMIT 1",
-                (item["job_url"], f"{date_part}%")
+                """
+                SELECT 1
+                FROM jobs
+                WHERE job_url = %s
+                AND date_posted >= %s
+                LIMIT 1;
+                """,
+                (item["job_url"], two_hours_ago)
             )
-            
+
+            # If a duplicate exists, skip insertion
             if self.cursor.fetchone():
-                # Job already exists for today, skip insertion
-                logging.log(
-                    logging.DEBUG,
-                    f"Duplicate job skipped (same URL on {date_part}): {item['job_url']}"
+                logging.debug(
+                    f"Duplicate job skipped (same URL within past 2 hours): {item['job_url']}"
                 )
                 return item
             
