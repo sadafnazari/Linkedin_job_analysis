@@ -41,7 +41,7 @@ cd src/linkedin_job_search
 scrapy crawl job_scraper -a country=finland -a period=past_two_hours
 ```
 
-Note: LinkedIn has a 1000-result limit per search query. For larger datasets, use overlapping time windows to ensure complete coverage.
+Note: LinkedIn has a 1000-result limit per search query. For larger datasets, use overlapping time windows to ensure complete coverage. For instance, set the period for the past two hours and run the scraper every hour.
 
 Running the scraper periodically can be done with `crontab` job with the `run_scrapy.sh` helper script.
 
@@ -51,5 +51,5 @@ crontab -e
 ```
 Then, add the job and modify the command:
 ```bash
-0 */2 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs.log 2>&1
+0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs_$(date +\%Y\%m\%d).log 2>&1
 ```
