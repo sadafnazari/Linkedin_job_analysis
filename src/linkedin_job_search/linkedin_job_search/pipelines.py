@@ -246,7 +246,7 @@ class PostgresPipeline:
                     title TEXT,
                     company TEXT,
                     location TEXT,
-                    city TEST,
+                    city TEXT,
                     region TEXT,
                     country TEXT,
                     seniority_level TEXT,
