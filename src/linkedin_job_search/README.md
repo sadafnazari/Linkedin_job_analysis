@@ -51,5 +51,5 @@ crontab -e
 ```
 Then, add the job and modify the command:
 ```bash
-0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs_$(date +\%Y\%m\%d).log 2>&1
+0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs_$(date +\%Y\%m\%d_\%H\%M).log 2>&1
 ```
