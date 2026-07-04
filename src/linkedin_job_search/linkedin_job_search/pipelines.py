@@ -1,3 +1,4 @@
+import calendar
 import datetime
 import json
 import logging
@@ -92,16 +93,24 @@ class LinkedinJobSearchPipeline:
             date = datetime.datetime.now() - datetime.timedelta(weeks=weeks)
         elif "month" in time_ago:
             months = int(time_ago.split()[0])
-            date = datetime.datetime.now() - datetime.timedelta(months=months)
+            date = self.subtract_months(datetime.datetime.now(), months)
         elif "year" in time_ago:
             years = int(time_ago.split()[0])
-            date = datetime.datetime.now() - datetime.timedelta(years=years)
+            date = self.subtract_months(datetime.datetime.now(), years * 12)
         else:
             date = datetime.datetime.now()
 
         date = date.strftime("%Y-%m-%d %H:%M:%S")
 
         return date
+
+    def subtract_months(self, date, months):
+        total_months = date.year * 12 + (date.month - 1) - months
+        year, month = divmod(total_months, 12)
+        month += 1
+        last_day_of_month = calendar.monthrange(year, month)[1]
+        day = min(date.day, last_day_of_month)
+        return date.replace(year=year, month=month, day=day)
 
     def normalize_description(self, description):
         soup = BeautifulSoup(description, "html.parser")
