@@ -53,3 +53,12 @@ Then, add the job and modify the command:
 ```bash
 0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs_$(date +\%Y\%m\%d_\%H\%M).log 2>&1
 ```
+
+## Tests
+
+Unit tests cover `pipelines.py` (date/location/job-field normalization, Postgres dedup logic) and the spider's `parse`/`parse_job` callbacks (using saved HTML fixtures, no network calls). Run from this directory so relative resource paths resolve:
+
+```bash
+cd src/linkedin_job_search
+pytest tests/
+```
