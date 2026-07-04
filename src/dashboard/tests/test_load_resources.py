@@ -44,19 +44,14 @@ def app_dir(tmp_path):
 
 
 class TestLoadCountries:
-    def test_lists_country_directories(self, app_dir, monkeypatch):
-        # load_countries lists app_path/resources but then filters with
-        # os.path.isdir(os.path.join("resources", item)) -- a hardcoded
-        # relative "resources", not app_path-joined. It only works in
-        # production because streamlit is launched from the repo root,
-        # so cwd == app_path there. Reproduce that here explicitly.
-        monkeypatch.chdir(app_dir)
+    def test_lists_country_directories(self, app_dir):
         countries = load_countries(str(app_dir))
         assert set(countries) == {"finland", "sweden"}
 
-    def test_returns_nothing_when_cwd_differs_from_app_path(self, app_dir):
+    def test_works_regardless_of_cwd(self, app_dir, tmp_path_factory, monkeypatch):
+        monkeypatch.chdir(tmp_path_factory.mktemp("elsewhere"))
         countries = load_countries(str(app_dir))
-        assert countries == []
+        assert set(countries) == {"finland", "sweden"}
 
 
 class TestLoadRegions:

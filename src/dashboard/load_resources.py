@@ -25,7 +25,7 @@ def load_countries(app_path):
     """
     items = os.listdir(f"{app_path}/resources")
     countries = [
-        item for item in items if os.path.isdir(os.path.join("resources", item))
+        item for item in items if os.path.isdir(os.path.join(app_path, "resources", item))
     ]
     return countries
 
