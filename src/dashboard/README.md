@@ -19,3 +19,12 @@ For running locally, the following command should be executed in the root projec
 ```bash
 streamlit run src/dashboard/app.py
 ```
+
+## Tests
+
+Unit tests cover `queries.py`, `pre_processing.py`, `load_resources.py`/`load_defaults.py`, `load_data.py` (mocked DB/secrets), `plots.py`, and `tables.py`. Run from this directory:
+
+```bash
+cd src/dashboard
+pytest tests/
+```
