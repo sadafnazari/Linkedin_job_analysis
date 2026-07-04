@@ -3,6 +3,8 @@
 This module provides function(s) for pre processing data before retriving
 information from it.
 """
+import json
+
 import pandas as pd
 
 
@@ -18,7 +20,7 @@ def pre_processing(df, selected_country):
     pandas.DataFrame: A filtered and cleaned DataFrame.
     """
     df["job_fields"] = df["job_fields"].apply(
-        lambda x: eval(x) if isinstance(x, str) else x
+        lambda x: json.loads(x) if isinstance(x, str) else x
     )
     df["date_posted"] = pd.to_datetime(df["date_posted"])
 
