@@ -44,14 +44,9 @@ class TestPreProcessing:
         result = pre_processing(raw_df(), "finland")
         assert set(result["country"].str.lower()) == {"finland"}
 
-    def test_uppercase_selected_country_matches_nothing(self):
-        # pre_processing.py compares df["country"].str.lower() == selected_country
-        # without lowercasing selected_country, so anything but an
-        # already-lowercase value silently matches zero rows. This only
-        # doesn't bite today because callers always pass a lowercase
-        # directory name.
+    def test_filters_by_country_case_insensitively(self):
         result = pre_processing(raw_df(), "FINLAND")
-        assert result.empty
+        assert set(result["country"].str.lower()) == {"finland"}
 
     def test_excludes_unspecified_region(self):
         result = pre_processing(raw_df(), "finland")

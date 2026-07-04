@@ -23,7 +23,7 @@ def pre_processing(df, selected_country):
     df["date_posted"] = pd.to_datetime(df["date_posted"])
 
     df = df[
-        (df["country"].str.lower() == selected_country)
+        (df["country"].str.lower() == selected_country.lower())
         & (df["region"] != "Unspecified")
     ]
     return df
