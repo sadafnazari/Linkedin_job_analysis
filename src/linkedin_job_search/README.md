@@ -30,7 +30,7 @@ The process can be done by calling the scraper to crawl the data with the follow
 Two arguments should be given to the scraper:
 - country: the name of the country. If it has more than one word, just replace the `space` with `_`. e.g. `New_Zealand`.
 - period: the basis for the scraper to look for. options are:
-  - `past_two_hours`
+  - `past_2_hours`
   - `past_24_hours`
   - `past_week`
   - `past_month`
@@ -38,12 +38,12 @@ Two arguments should be given to the scraper:
 
 ```bash
 cd src/linkedin_job_search
-scrapy crawl job_scraper -a country=finland -a period=past_two_hours
+scrapy crawl job_scraper -a country=finland -a period=past_2_hours
 ```
 
 Note: LinkedIn has a 1000-result limit per search query. For larger datasets, use overlapping time windows to ensure complete coverage. For instance, set the period for the past two hours and run the scraper every hour.
 
-Running the scraper periodically can be done with `crontab` job with the `run_scrapy.sh` helper script.
+Running the scraper periodically can be done with `crontab` job with the `run_scrapy.sh` helper script. The script already guards against overlapping/stuck runs with a `flock` lock and caps each run with a `timeout`, so the cron job itself just needs to append to a single log file.
 
 Open and edit the cron table with the following command:
 ```bash
@@ -51,8 +51,10 @@ crontab -e
 ```
 Then, add the job and modify the command:
 ```bash
-0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/logs_$(date +\%Y\%m\%d_\%H\%M).log 2>&1
+0 */1 * * * /bin/bash /path/to/run_scrapy.sh >> /path/to/scrapy.log 2>&1
 ```
+
+Set up log rotation for that file (e.g. with `logrotate`) rather than writing a new timestamped log per run, to keep disk usage bounded.
 
 ## Tests
 
