@@ -3,6 +3,7 @@
 This module provides function(s) for pre processing data before retriving
 information from it.
 """
+
 import json
 
 import pandas as pd

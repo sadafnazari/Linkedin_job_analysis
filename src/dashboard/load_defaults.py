@@ -1,6 +1,7 @@
 # load_defaults.py
 """This module provides functions for loading the default values for the
 filters in the selectboxes in the side menu."""
+
 import json
 
 

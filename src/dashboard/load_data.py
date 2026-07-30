@@ -4,6 +4,7 @@
 This module provides function(s) for loading data from the database
 to Pandas data frame.
 """
+
 import pandas as pd
 import streamlit as st
 from sqlalchemy import create_engine

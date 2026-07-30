@@ -1,5 +1,6 @@
 # queries.py
 """This module provides functions for different queries that the application requires."""
+
 import pandas as pd
 
 

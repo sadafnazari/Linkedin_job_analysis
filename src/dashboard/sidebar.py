@@ -1,5 +1,6 @@
 # sidebar.py
 """This module provides functions for rendering the sidebar menu."""
+
 import streamlit as st
 
 

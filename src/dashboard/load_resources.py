@@ -3,6 +3,7 @@
 """
 This modules provides functions that load the list of items that are to be selected in the selectboxes in the sidemenu.
 """
+
 import json
 import os
 
@@ -25,7 +26,9 @@ def load_countries(app_path):
     """
     items = os.listdir(f"{app_path}/resources")
     countries = [
-        item for item in items if os.path.isdir(os.path.join(app_path, "resources", item))
+        item
+        for item in items
+        if os.path.isdir(os.path.join(app_path, "resources", item))
     ]
     return countries
 

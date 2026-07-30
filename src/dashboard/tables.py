@@ -1,5 +1,6 @@
 # tables.py
 """This module provides function(s) for showing latest job posts on demand."""
+
 import pandas as pd
 import streamlit as st
 

@@ -19,7 +19,9 @@ def captured_chart(monkeypatch):
 
 class TestPlotLineTotalJobs:
     def test_renders_line_with_matching_data(self, captured_chart):
-        job_counts = pd.DataFrame({"day": ["2026-07-01", "2026-07-02"], "job_count": [3, 5]})
+        job_counts = pd.DataFrame(
+            {"day": ["2026-07-01", "2026-07-02"], "job_count": [3, 5]}
+        )
         plots.plot_line_total_jobs(job_counts, "day")
 
         fig = captured_chart["fig"]
@@ -55,9 +57,7 @@ class TestPlotLinesTotalJobsSelectboxPerSeniorityLevel:
 
 class TestPlotPieTopCompaniesSelectbox:
     def test_pie_slices_match_input(self, captured_chart):
-        df = pd.DataFrame(
-            {"company": ["Acme Oy", "Beta Ltd"], "job_count": [7, 3]}
-        )
+        df = pd.DataFrame({"company": ["Acme Oy", "Beta Ltd"], "job_count": [7, 3]})
         plots.plot_pie_top_companies_seletbox(
             df, "Uusimaa", "Software Development", "Entry level", "day"
         )

@@ -2,6 +2,7 @@
 """
 This module provides functions for plotting data in streamlit.
 """
+
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st

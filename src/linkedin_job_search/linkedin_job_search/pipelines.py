@@ -248,8 +248,7 @@ class PostgresPipeline:
             self.cursor = self.conn.cursor()
             logging.log(logging.DEBUG, "Successfully connected to PostgreSQL")
 
-            self.cursor.execute(
-                """
+            self.cursor.execute("""
                 CREATE TABLE IF NOT EXISTS jobs (
                     date_posted TIMESTAMP,
                     title TEXT,
@@ -266,9 +265,8 @@ class PostgresPipeline:
                     description TEXT,
                     job_url TEXT
                 );
-            """
-            )
-            
+            """)
+
             self.conn.commit()
         except psycopg2.Error as e:
             logging.log(logging.ERROR, f"Failed to connect to PostgreSQL: {e}")
@@ -295,7 +293,7 @@ class PostgresPipeline:
                 AND date_posted >= %s
                 LIMIT 1;
                 """,
-                (item["job_url"], two_hours_ago)
+                (item["job_url"], two_hours_ago),
             )
 
             # If a duplicate exists, skip insertion
@@ -304,7 +302,7 @@ class PostgresPipeline:
                     f"Duplicate job skipped (same URL within past 2 hours): {item['job_url']}"
                 )
                 return item
-            
+
             # Insert new job
             self.cursor.execute(
                 """

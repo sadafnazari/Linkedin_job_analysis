@@ -1,7 +1,7 @@
 repos:
   # 1. Black - Code Formatter
   - repo: https://github.com/psf/black
-    rev: 24.10.0 # Use the latest stable version
+    rev: 26.3.1 # Use the latest stable version
     hooks:
       - id: black
         args: [--line-length=88]
