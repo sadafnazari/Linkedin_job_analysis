@@ -25,3 +25,7 @@ env/
 
 .streamlit/secrets.toml
 configs/linkedin-job-analysis-api-key.json
+
+# Claude Code (CLAUDE.md and .claude/rules/ are checked in)
+CLAUDE.local.md
+.claude/settings.local.json

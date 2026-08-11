@@ -45,6 +45,25 @@ Because a snapshot goes stale, the harness shifts `date_posted` forward so its
 most recent post lands at today — otherwise the default "Past month" filter would
 match nothing. Row counts and rankings are real; the dates are not.
 
+## Theming
+
+The app is built to a fixed visual design, so most of the page is markup the app authors
+rather than stock Streamlit widgets. A few constraints follow from that:
+
+- The design tokens are mirrored in three places, and all three have to be changed
+  together: `.streamlit/config.toml` (Streamlit's own chrome), `theme.py` (the Plotly
+  template and the Python constants) and `styles.py` (the injected stylesheet).
+- The injected CSS targets `data-testid`, `data-baseweb` and the `st-key-*` classes
+  Streamlit derives from container keys. It never targets the hashed
+  `.st-emotion-cache-*` class names, which change between Streamlit releases and would
+  break the styling on upgrade.
+- Plotly figures are rendered with `theme=None`. Without it Streamlit substitutes its own
+  template and discards the figure's.
+- Fonts are vendored under `static/fonts/` and served through
+  `[server] enableStaticServing`, so the app does not depend on an external font host.
+- Every value rendered into the hand-written HTML in `components.py` is passed through
+  `html.escape`, because it comes from scraped job posts.
+
 ## Tests
 
 Unit tests cover `queries.py`, `pre_processing.py`, `load_resources.py`/`load_defaults.py`, `load_data.py` (mocked DB/secrets), `plots.py`, and `tables.py`. Run from this directory:
