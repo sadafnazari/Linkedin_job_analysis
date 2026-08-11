@@ -44,6 +44,29 @@ def filter_summary(job_field, region, seniority_level, period):
     return " · ".join([job_field, region, seniority_level, period])
 
 
+def scope_note(relaxed_dimension, *applied_filters):
+    """
+    Builds the muted line under a panel title stating which filters it obeys.
+
+    The breakdown panels each ignore their own dimension, so without this line a
+    chart looks like the filter failed to apply.
+
+    Args:
+    relaxed_dimension (str): The filter the panel deliberately ignores, e.g.
+                             "Job field", or None when it obeys every filter.
+    *applied_filters (str): The filter values the panel does obey, in display
+                            order.
+
+    Returns:
+    str: The scope line, e.g.
+         "Job field filter not applied · Uusimaa · Mid-Senior level · Past month".
+    """
+    applied = list(applied_filters)
+    if relaxed_dimension:
+        applied.insert(0, f"{relaxed_dimension} filter not applied")
+    return " · ".join(applied)
+
+
 def render_kpi_row(filtered_df, untimed_df, job_field, region):
     """
     Renders the four KPI cards above the trend chart.
@@ -99,7 +122,9 @@ def render_kpi_row(filtered_df, untimed_df, job_field, region):
     )
 
 
-def render_analysis(df, period_df, filtered_df, summary, region, job_field, seniority):
+def render_analysis(
+    df, period_df, filtered_df, summary, region, job_field, seniority, period
+):
     """
     Renders the Analysis screen: KPI row, trend chart and four ranked lists.
 
@@ -115,6 +140,7 @@ def render_analysis(df, period_df, filtered_df, summary, region, job_field, seni
     region (str): The selected region, or ALL_REGIONS.
     job_field (str): The selected job field, or ALL_FIELDS.
     seniority (str): The selected seniority level, or ALL_LEVELS.
+    period (str): The selected time period.
 
     This function does not return a value. It renders the screen with Streamlit.
     """
@@ -134,10 +160,11 @@ def render_analysis(df, period_df, filtered_df, summary, region, job_field, seni
 
     companies_panel = ui.panel_html(
         "Top recruiting companies",
-        "Ranked by open roles",
+        "Companies hiring for the selected filters",
         ui.ranked_bar_list_html(
             qs.ranked_counts(filtered_df, "company", TOP_COMPANY_ROWS)
         ),
+        subtitle=scope_note(None, job_field, region, seniority, period),
     )
 
     # Every level is shown whatever the seniority filter says, so the mix reads
@@ -148,8 +175,9 @@ def render_analysis(df, period_df, filtered_df, summary, region, job_field, seni
         row["color"] = seniority_color(row["name"])
     seniority_panel = ui.panel_html(
         "Seniority mix",
-        "Postings by seniority level",
+        "Every seniority level, not just the selected one",
         ui.ranked_bar_list_html(seniority_rows),
+        subtitle=scope_note("Seniority", job_field, region, period),
     )
 
     ui.render(ui.two_column_row_html(companies_panel, seniority_panel))
@@ -158,12 +186,13 @@ def render_analysis(df, period_df, filtered_df, summary, region, job_field, seni
     ui.render(
         ui.panel_html(
             "By job field",
-            "Postings across all job fields",
+            "Every job field, not just the selected one",
             ui.ranked_bar_list_html(
                 qs.ranked_counts(all_fields_df, "job_fields", BREAKDOWN_ROWS),
                 label_width=220,
                 value_width=44,
             ),
+            subtitle=scope_note("Job field", region, seniority, period),
         )
     )
 
@@ -172,12 +201,13 @@ def render_analysis(df, period_df, filtered_df, summary, region, job_field, seni
     ui.render(
         ui.panel_html(
             "By region",
-            "Postings across all regions",
+            "Every region, not just the selected one",
             ui.ranked_bar_list_html(
                 qs.ranked_counts(all_regions_df, "region", BREAKDOWN_ROWS),
                 label_width=220,
                 value_width=44,
             ),
+            subtitle=scope_note("Region", job_field, seniority, period),
         )
     )
 
@@ -288,6 +318,7 @@ if __name__ == "__main__":
             selected_region,
             selected_job_field,
             selected_seniority,
+            selected_period,
         )
     else:
         tb.render_latest_jobs(
