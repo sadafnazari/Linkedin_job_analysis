@@ -1,6 +1,81 @@
+# Theme tokens mirror the "Industry" design system (styles.css :root).
+# Keep in sync with src/dashboard/theme.py, which carries the same tokens for Plotly.
+
+[server]
+enableStaticServing = true
+
 [theme]
-primaryColor="#1f77b4"
-backgroundColor="#ffffff"
-secondaryBackgroundColor="#f0f0f0"
-textColor="#000000"
-font="sans serif"
+base = "light"
+backgroundColor = "#f2f2f3"
+secondaryBackgroundColor = "#e9e9ea"
+textColor = "#1d1f20"
+primaryColor = "#5980a6"
+linkColor = "#416180"
+borderColor = "#d0d0d1"
+dataframeBorderColor = "#d0d0d1"
+showWidgetBorder = true
+
+# Industry frames every object with square corners and a hairline.
+baseRadius = "none"
+buttonRadius = "none"
+
+font = "Barlow"
+headingFont = "Barlow Condensed"
+baseFontSize = 15
+
+# Single-hue steel ramp (accent steps 300-800). Seniority is ordinal, so the
+# same ramp serves as both the categorical and the sequential scale.
+chartCategoricalColors = [
+  "#94bce3",
+  "#749dc4",
+  "#597ea3",
+  "#416180",
+  "#2c455d",
+  "#1d2d3d",
+]
+chartSequentialColors = [
+  "#eef6ff",
+  "#d6ebff",
+  "#b5d9fd",
+  "#94bce3",
+  "#749dc4",
+  "#597ea3",
+  "#416180",
+  "#2c455d",
+  "#1d2d3d",
+  "#111c26",
+]
+
+[theme.sidebar]
+backgroundColor = "#e9e9ea"
+borderColor = "#d0d0d1"
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fonts/barlow-400.woff2"
+weight = 400
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fonts/barlow-500.woff2"
+weight = 500
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fonts/barlow-700.woff2"
+weight = 700
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Barlow Condensed"
+url = "app/static/fonts/barlow-condensed-400.woff2"
+weight = 400
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Barlow Condensed"
+url = "app/static/fonts/barlow-condensed-600.woff2"
+weight = 600
+style = "normal"

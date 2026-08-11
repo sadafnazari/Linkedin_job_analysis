@@ -7,7 +7,6 @@ from load_resources import (
     load_job_fields,
     load_regions,
     load_seniority_levels,
-    load_time_periods,
 )
 
 
@@ -36,9 +35,6 @@ def app_dir(tmp_path):
     )
     (resources_dir / "seniority_levels_finland.json").write_text(
         json.dumps([{"level": "Entry level"}, {"level": "Mid-Senior level"}])
-    )
-    (resources_dir / "time_periods_finland.json").write_text(
-        json.dumps([{"time_period": "Any time"}, {"time_period": "day"}])
     )
     return tmp_path
 
@@ -74,9 +70,3 @@ class TestLoadSeniorityLevels:
     def test_returns_sorted_levels(self, app_dir):
         levels = load_seniority_levels(str(app_dir), "finland")
         assert levels == ["Entry level", "Mid-Senior level"]
-
-
-class TestLoadTimePeriods:
-    def test_returns_time_periods_in_file_order(self, app_dir):
-        periods = load_time_periods(str(app_dir), "finland")
-        assert periods == ["Any time", "day"]

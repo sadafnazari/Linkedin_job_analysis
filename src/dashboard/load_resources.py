@@ -106,28 +106,3 @@ def load_seniority_levels(app_path, country):
         seniority_levels_data = json.load(file)
         seniority_levels = sorted({item["level"] for item in seniority_levels_data})
     return seniority_levels
-
-
-def load_time_periods(app_path, country):
-    """
-    Loads and returns a list of time periods for the specified country.
-
-    This function reads a JSON file containing time period data for a specific
-    country, extracts the 'time_period' values, and returns a list of
-    time periods.
-
-    Args:
-    app_path (str): The base path to the application directory.
-    country (str): The name of the country for which time periods are
-                   to be loaded.
-
-    Returns:
-    list: A list of strings, each representing a time period for the
-         specified country.
-    """
-    with open(
-        f"{app_path}/resources/{country.lower()}/time_periods_{country.lower()}.json",
-    ) as file:
-        time_periods_data = json.load(file)
-        time_periods = [item["time_period"] for item in time_periods_data]
-    return time_periods

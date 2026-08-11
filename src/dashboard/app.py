@@ -6,187 +6,291 @@ This is the main module for visualizing data with streamlit.
 
 import os
 
+import components as ui
 import load_resources as loader
 import plots as ps
 import queries as qs
 import sidebar as sb
 import streamlit as st
+import styles as sty
+import tables as tb
 from load_data import load_data
 from load_defaults import load_defaults
 from pre_processing import pre_processing
-from tables import create_df_latest_jobs
+from theme import ALL_FIELDS, ALL_LEVELS, ALL_REGIONS, seniority_color
+
+# Only Finland has resource data today; the sidebar's country control is shown
+# but disabled, so the screens are built against this one country.
+COUNTRY = "finland"
+
+TOP_COMPANY_ROWS = 8
+BREAKDOWN_ROWS = 14
+
+
+def filter_summary(job_field, region, seniority_level, period):
+    """
+    Builds the one-line description of the active filters shown around the page.
+
+    Args:
+    job_field (str): The selected job field, or ALL_FIELDS.
+    region (str): The selected region, or ALL_REGIONS.
+    seniority_level (str): The selected seniority level, or ALL_LEVELS.
+    period (str): The selected time period.
+
+    Returns:
+    str: The filters joined for display, e.g.
+         "All fields · All regions · All levels · Past month".
+    """
+    return " · ".join([job_field, region, seniority_level, period])
+
+
+def render_kpi_row(filtered_df, untimed_df, job_field, region):
+    """
+    Renders the four KPI cards above the trend chart.
+
+    The field and region cards switch from "the top one" to "the selected one"
+    when that dimension is already filtered, so a card never reports a value the
+    user has just filtered away.
+
+    Args:
+    filtered_df (pandas.DataFrame): Postings matching every active filter.
+    untimed_df (pandas.DataFrame): The same postings ignoring the time period,
+                                   used for month-over-month momentum.
+    job_field (str): The selected job field, or ALL_FIELDS.
+    region (str): The selected region, or ALL_REGIONS.
+
+    This function does not return a value. It renders the row with Streamlit.
+    """
+    change_percent, sparkline = qs.momentum(qs.monthly_counts(untimed_df))
+
+    if job_field == ALL_FIELDS:
+        field_kicker = "Top job field"
+        field_name, field_share, _ = qs.top_entity(filtered_df, "job_fields")
+    else:
+        field_kicker = "Selected field share"
+        field_name = job_field
+        field_share, _ = qs.entity_share(filtered_df, "job_fields", job_field)
+
+    if region == ALL_REGIONS:
+        region_kicker = "Top region"
+        region_name, region_share, _ = qs.top_entity(filtered_df, "region")
+    else:
+        region_kicker = "Selected region share"
+        region_name = region
+        region_share, _ = qs.entity_share(filtered_df, "region", region)
+
+    company_name, _, company_jobs = qs.top_entity(filtered_df, "company")
+
+    ui.render(
+        ui.kpi_row_html(
+            [
+                ui.momentum_card_html(change_percent, sparkline),
+                ui.stat_card_html(
+                    field_kicker, field_name, f"{field_share:.0f}% of all postings"
+                ),
+                ui.stat_card_html(
+                    region_kicker, region_name, f"{region_share:.0f}% of all postings"
+                ),
+                ui.stat_card_html(
+                    "Top recruiter", company_name, f"{company_jobs:,} open roles"
+                ),
+            ]
+        )
+    )
+
+
+def render_analysis(df, period_df, filtered_df, summary, region, job_field, seniority):
+    """
+    Renders the Analysis screen: KPI row, trend chart and four ranked lists.
+
+    The job field and region breakdowns deliberately ignore their own filter, so
+    narrowing one of them does not collapse its chart to a single row — they stay
+    comparison views.
+
+    Args:
+    df (pandas.DataFrame): All postings for the country.
+    period_df (pandas.DataFrame): Postings inside the selected time period.
+    filtered_df (pandas.DataFrame): Postings matching every active filter.
+    summary (str): The one-line filter description.
+    region (str): The selected region, or ALL_REGIONS.
+    job_field (str): The selected job field, or ALL_FIELDS.
+    seniority (str): The selected seniority level, or ALL_LEVELS.
+
+    This function does not return a value. It renders the screen with Streamlit.
+    """
+    # The trend covers a fixed 24-month window, so it ignores the period filter.
+    trend_df = qs.filter_jobs(df, region, job_field, seniority)
+    render_kpi_row(filtered_df, trend_df, job_field, region)
+
+    with ui.blueprint_container("bp-trend"):
+        ui.render(
+            '<div class="industry"><div class="card-kicker">Trend</div>'
+            '<h4 class="card-title" style="margin-bottom:2px">Job postings over time</h4>'
+            '<div class="text-muted" style="font-size:12px">'
+            f"{summary} · last {qs.TREND_MONTHS} months · "
+            "hover the line for a month's value</div></div>"
+        )
+        ps.plot_trend(qs.monthly_counts(trend_df))
+
+    companies_panel = ui.panel_html(
+        "Top recruiting companies",
+        "Ranked by open roles",
+        ui.ranked_bar_list_html(
+            qs.ranked_counts(filtered_df, "company", TOP_COMPANY_ROWS)
+        ),
+    )
+
+    # Every level is shown whatever the seniority filter says, so the mix reads
+    # as context instead of collapsing to a single row.
+    all_levels_df = qs.filter_jobs(period_df, region, job_field, ALL_LEVELS)
+    seniority_rows = qs.ranked_counts(all_levels_df, "seniority_level")
+    for row in seniority_rows:
+        row["color"] = seniority_color(row["name"])
+    seniority_panel = ui.panel_html(
+        "Seniority mix",
+        "Postings by seniority level",
+        ui.ranked_bar_list_html(seniority_rows),
+    )
+
+    ui.render(ui.two_column_row_html(companies_panel, seniority_panel))
+
+    all_fields_df = qs.filter_jobs(period_df, region, ALL_FIELDS, seniority)
+    ui.render(
+        ui.panel_html(
+            "By job field",
+            "Postings across all job fields",
+            ui.ranked_bar_list_html(
+                qs.ranked_counts(all_fields_df, "job_fields", BREAKDOWN_ROWS),
+                label_width=220,
+                value_width=44,
+            ),
+        )
+    )
+
+    st.write("")
+    all_regions_df = qs.filter_jobs(period_df, ALL_REGIONS, job_field, seniority)
+    ui.render(
+        ui.panel_html(
+            "By region",
+            "Postings across all regions",
+            ui.ranked_bar_list_html(
+                qs.ranked_counts(all_regions_df, "region", BREAKDOWN_ROWS),
+                label_width=220,
+                value_width=44,
+            ),
+        )
+    )
+
+
+def render_empty_state(summary):
+    """
+    Renders the "no matching postings" card in place of a screen's content.
+
+    Args:
+    summary (str): The one-line filter description.
+
+    This function does not return a value. It renders the card with Streamlit.
+    """
+    ui.render(ui.empty_state_html(summary))
+    with st.container(key="ghost-reset-empty"):
+        st.button("Reset filters", on_click=sb.reset_filters, key="reset_empty")
+
 
 if __name__ == "__main__":
     app_path = os.path.dirname(os.path.abspath(__file__))
     app_path += "/../.."
 
     st.set_page_config(page_title="LinkedIn Job Analysis", layout="wide")
-
-    st.markdown(
-        """
-    <style>
-        .reportview-container {
-            padding: 0;
-        }
-        .main {
-            padding: 0;
-        }
-        .sidebar {
-            padding: 0;
-        }
-    </style>
-    <h1 style='text-align: center;'>LinkedIn Job Analysis Dashboard</h1>
-    <p style='text-align: center;'>
-        The data below updates daily and reflects the current job postings.
-    </p>
-    """,
-        unsafe_allow_html=True,
-    )
+    sty.apply_page_style()
 
     df = load_data()
+    df = pre_processing(df, COUNTRY)
 
     countries = loader.load_countries(app_path)
-    default_country = "finland"
-    default_country_index = (
-        countries.index(default_country) if default_country in countries else 0
+    regions = loader.load_regions(app_path, COUNTRY)
+    job_fields = loader.load_job_fields(app_path, COUNTRY)
+    seniority_levels = loader.load_seniority_levels(app_path, COUNTRY)
+    filter_options = {
+        "region": [ALL_REGIONS, *regions],
+        "job_field": [ALL_FIELDS, *job_fields],
+        "seniority_level": [ALL_LEVELS, *seniority_levels],
+        "period": list(qs.PERIOD_OFFSETS),
+    }
+    default_region, default_job_field, default_seniority, default_period = (
+        load_defaults(app_path, COUNTRY)
     )
-    selected_country = sb.sidebar_selectbox_country(countries, default_country_index)
-
-    df = pre_processing(df, selected_country)
-
-    regions = loader.load_regions(app_path, selected_country)
-    job_fields = loader.load_job_fields(app_path, selected_country)
-    seniority_levels = loader.load_seniority_levels(app_path, selected_country)
-    time_periods = loader.load_time_periods(app_path, selected_country)
-
-    default_region, default_job_field, default_seniority_level, default_time_period = (
-        load_defaults(app_path, selected_country)
-    )
-
-    default_region_index = (
-        regions.index(default_region) if default_region in regions else 0
-    )
-    default_job_field_index = (
-        job_fields.index(default_job_field) if default_job_field in job_fields else 0
-    )
-    default_seniority_level_index = (
-        seniority_levels.index(default_seniority_level)
-        if default_seniority_level in seniority_levels
-        else 0
-    )
-    default_time_period_index = (
-        time_periods.index(default_time_period)
-        if default_time_period in time_periods
-        else 0
+    sb.initialise_filter_state(
+        {
+            "region": default_region,
+            "job_field": default_job_field,
+            "seniority_level": default_seniority,
+            "period": default_period,
+        },
+        filter_options,
     )
 
-    colors = ["#E57373", "#81C784", "#FFD54F", "#64B5F6", "#B39DDB", "#A1887F"]
-    color_mapping = {level: color for level, color in zip(seniority_levels, colors)}
-    color_sequence = [color_mapping[seniority] for seniority in seniority_levels]
-
-    (
-        selected_region,
-        selected_job_field,
-        selected_seniority_level,
-        selected_time_period,
-    ) = sb.sidebar_selectbox_rest(
-        regions,
-        job_fields,
-        seniority_levels,
-        time_periods,
-        default_region_index,
-        default_job_field_index,
-        default_seniority_level_index,
-        default_time_period_index,
-    )
-
-    filtered_df = qs.filter_jobs_by_selectbox(
-        df,
-        selected_region,
-        selected_job_field,
-        selected_seniority_level,
-    )
-    filtered_df = qs.filter_by_time_period(filtered_df, selected_time_period)
-    sb.sidebar_put_result(filtered_df)
-
-    filtered_df_past_week = qs.filter_by_time_period(filtered_df, "week", 1)
-
-    job_counts = qs.total_jobs_per_time_frequency(df, selected_time_period)
-
-    count_seniority_levels = qs.separate_for_seniority_levels(
-        df, selected_region, selected_job_field, seniority_levels, selected_time_period
-    )
-
-    top_10_companies_selectbox = qs.top_10_companies_by_selectbox(filtered_df)
-    top_10_companies_field = qs.top_10_companies_by_job_field_and_time_period(
-        df, selected_job_field, selected_time_period
-    )
-    top_10_companies_region = qs.top_10_companies_by_region_and_time_period(
-        df, selected_region, selected_time_period
-    )
-
-    job_counts_by_field, sorted_job_fields = (
-        qs.total_jobs_by_region_and_time_period_across_job_fields_and_seniority_levels(
-            df, selected_region, selected_time_period, seniority_levels
-        )
-    )
-    job_counts_by_region, sorted_regions = (
-        qs.total_jobs_by_job_field_and_time_period_across_regions_and_seniority_levels(
-            df, selected_job_field, selected_time_period, seniority_levels
+    last_updated = df["date_posted"].max()
+    ui.render(
+        ui.top_nav_html(
+            f"Updated {last_updated:%b} {last_updated.day}, {last_updated.year}"
+            " · updates daily"
         )
     )
 
-    tab_total_jobs, tab_latest_jobs = st.tabs(["Analysis", "Latest jobs"])
-    with tab_total_jobs, st.container(border=True):
-        ps.plot_line_total_jobs(job_counts, selected_time_period)
-    with tab_latest_jobs, st.container(border=True):
-        create_df_latest_jobs(filtered_df_past_week, selected_job_field)
+    sb.render_filters(countries, filter_options)
 
-    col_pie_selectbox, col_bar_selectbox = st.columns([1, 2])
-    with col_pie_selectbox, st.container(border=True):
-        ps.plot_pie_top_companies_seletbox(
-            top_10_companies_selectbox,
+    selected_region = st.session_state["region"]
+    selected_job_field = st.session_state["job_field"]
+    selected_seniority = st.session_state["seniority_level"]
+    selected_period = st.session_state["period"]
+    summary = filter_summary(
+        selected_job_field, selected_region, selected_seniority, selected_period
+    )
+
+    period_df = qs.filter_by_period(df, selected_period)
+    filtered_df = qs.filter_jobs(
+        period_df, selected_region, selected_job_field, selected_seniority
+    )
+    sb.render_total_matched(len(filtered_df), summary)
+
+    is_analysis = st.session_state["tab"] != "Latest jobs"
+    title_column, tab_column = st.columns([3, 1])
+    with title_column:
+        ui.render(
+            ui.page_header_html(
+                "Tech hiring trends" if is_analysis else "Latest jobs",
+                (
+                    (
+                        "Job postings across Finland, broken down by field, "
+                        "region and seniority."
+                    )
+                    if is_analysis
+                    else summary
+                ),
+            )
+        )
+    with tab_column:
+        st.segmented_control(
+            "View",
+            options=["Analysis", "Latest jobs"],
+            key="tab",
+            label_visibility="collapsed",
+        )
+
+    if filtered_df.empty:
+        render_empty_state(summary)
+    elif is_analysis:
+        render_analysis(
+            df,
+            period_df,
+            filtered_df,
+            summary,
             selected_region,
             selected_job_field,
-            selected_seniority_level,
-            selected_time_period,
+            selected_seniority,
         )
-    with col_bar_selectbox, st.container(border=True):
-        ps.plot_lines_total_jobs_selectbox_per_seniority_level(
-            count_seniority_levels,
-            selected_region,
+    else:
+        tb.render_latest_jobs(
+            filtered_df.sort_values("date_posted", ascending=False),
             selected_job_field,
-            seniority_levels,
-            selected_time_period,
-            color_mapping,
-        )
-
-    col_pie_region, col_bar_region = st.columns([1, 2])
-    with col_pie_region, st.container(border=True):
-        ps.plot_pie_top_companies_region(
-            top_10_companies_region, selected_region, selected_time_period
-        )
-    with col_bar_region, st.container(border=True):
-        ps.plot_stacked_bar_chart_jobs_by_region_across_job_fields_and_seniority_levels_over_selected_time(
-            job_counts_by_field,
-            selected_region,
-            color_sequence,
-            sorted_job_fields,
-            seniority_levels,
-            selected_time_period,
-        )
-
-    col_pie_job_field, col_bar_job_field = st.columns([1, 2])
-    with col_pie_job_field, st.container(border=True):
-        ps.plot_pie_top_companies_field(
-            top_10_companies_field, selected_job_field, selected_time_period
-        )
-    with col_bar_job_field, st.container(border=True):
-        ps.plot_stacked_bar_chart_jobs_by_job_field_across_regions_and_seniority_levels_over_selected_time(
-            job_counts_by_region,
-            selected_job_field,
-            color_sequence,
-            sorted_regions,
-            seniority_levels,
-            selected_time_period,
         )

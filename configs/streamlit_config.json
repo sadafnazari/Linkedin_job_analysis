@@ -5,7 +5,7 @@
             "default_region": "Uusimaa",
             "default_job_field": "Information Technology",
             "default_seniority_level": "Mid-Senior level",
-            "default_time_period": "month"
+            "default_time_period": "Past month"
         }
     ]
 }

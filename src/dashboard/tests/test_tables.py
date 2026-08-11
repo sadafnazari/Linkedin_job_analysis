@@ -1,76 +1,57 @@
 import pandas as pd
-import pytest
-import streamlit as st
 
 import tables
 
 
-@pytest.fixture
-def captured_data_editor(monkeypatch):
-    captured = {}
+def job_row(job_fields):
+    return pd.Series(
+        {
+            "date_posted": pd.Timestamp("2026-07-23"),
+            "title": "Research Specialist",
+            "company": "Gridle",
+            "region": "North Karelia",
+            "seniority_level": "Executive",
+            "job_fields": job_fields,
+            "job_url": "https://example.com/job",
+        }
+    )
 
-    monkeypatch.setattr(st, "markdown", lambda *a, **k: None)
 
-    def fake_data_editor(df, **kwargs):
-        captured["df"] = df
-        captured["kwargs"] = kwargs
+class TestRowForDisplay:
+    def test_dates_are_formatted_for_display(self):
+        row = tables._row_for_display(job_row(["Research"]), "All fields")
+        assert row["date"] == "23/07/2026"
 
-    monkeypatch.setattr(st, "data_editor", fake_data_editor)
-    return captured
+    def test_tag_shows_the_filtered_field_when_the_posting_has_it(self):
+        """A posting carries several fields; the one the user filtered on is the
+        one worth showing."""
+        row = tables._row_for_display(job_row(["Research", "Education"]), "Education")
+        assert row["field"] == "Education"
+
+    def test_tag_falls_back_to_the_first_field(self):
+        row = tables._row_for_display(job_row(["Research", "Education"]), "All fields")
+        assert row["field"] == "Research"
+
+    def test_posting_without_fields_still_renders(self):
+        row = tables._row_for_display(job_row([]), "All fields")
+        assert row["field"] == "—"
 
 
-class TestCreateDfLatestJobs:
-    def test_sorts_by_date_posted_descending(self, captured_data_editor):
-        df = pd.DataFrame(
-            {
-                "date_posted": ["2026-07-01", "2026-07-03", "2026-07-02"],
-                "title": ["A", "B", "C"],
-                "company": ["Acme", "Beta", "Gamma"],
-                "region": ["Uusimaa", "Uusimaa", "Uusimaa"],
-                "seniority_level": ["Entry level"] * 3,
-                "job_fields": [["Software Development"]] * 3,
-                "job_url": ["u1", "u2", "u3"],
-            }
-        )
+class TestPageWindow:
+    def test_window_is_centered_on_the_current_page(self):
+        assert list(tables._page_window(page=5, total_pages=20)) == [3, 4, 5, 6, 7]
 
-        tables.create_df_latest_jobs(df, "Software Development")
+    def test_window_sticks_to_the_start(self):
+        assert list(tables._page_window(page=1, total_pages=20)) == [1, 2, 3, 4, 5]
 
-        result = captured_data_editor["df"]
-        assert list(result["title"]) == ["B", "C", "A"]
+    def test_window_sticks_to_the_end(self):
+        assert list(tables._page_window(page=20, total_pages=20)) == [
+            16,
+            17,
+            18,
+            19,
+            20,
+        ]
 
-    def test_overwrites_job_fields_with_selected_job_field(self, captured_data_editor):
-        df = pd.DataFrame(
-            {
-                "date_posted": ["2026-07-01"],
-                "title": ["A"],
-                "company": ["Acme"],
-                "region": ["Uusimaa"],
-                "seniority_level": ["Entry level"],
-                "job_fields": [["Software Development", "Consulting"]],
-                "job_url": ["u1"],
-            }
-        )
-
-        tables.create_df_latest_jobs(df, "Software Development")
-
-        result = captured_data_editor["df"]
-        assert list(result["job_fields"]) == ["Software Development"]
-
-    def test_only_includes_expected_columns(self, captured_data_editor):
-        df = pd.DataFrame(
-            {
-                "date_posted": ["2026-07-01"],
-                "title": ["A"],
-                "company": ["Acme"],
-                "region": ["Uusimaa"],
-                "seniority_level": ["Entry level"],
-                "job_fields": [["Software Development"]],
-                "job_url": ["u1"],
-                "industries": ["IT Services"],
-            }
-        )
-
-        tables.create_df_latest_jobs(df, "Software Development")
-
-        result = captured_data_editor["df"]
-        assert "industries" not in result.columns
+    def test_fewer_pages_than_the_window_shows_them_all(self):
+        assert list(tables._page_window(page=1, total_pages=3)) == [1, 2, 3]
