@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 # Importing theme registers the Industry Plotly template as the default.
-from theme import ACCENT, DIVIDER, TREND_FILL
+from theme import DIVIDER, SEGMENT_OUTLINE, seniority_color
 
 # st.plotly_chart defaults to theme="streamlit", which replaces the figure's
 # template with Streamlit's own and would silently undo the design system.
@@ -33,33 +33,53 @@ def _month_tick_values(months):
 
 def plot_trend(monthly):
     """
-    Plots postings over time as a filled area chart.
+    Plots postings over time as an area chart stacked by seniority level.
 
-    The design strips this chart to the line, its fill and two y labels: hovering
-    is how a month's exact value is read, so grid, legend and axis lines are all
-    removed as furniture.
+    The bands answer "which levels moved" without a second chart, and carry the
+    same colors as every other stack on the page. The design strips the rest to
+    two y labels: hovering is how a month's values are read, so grid, in-chart
+    legend and axis lines are all removed as furniture. The legend lives above the
+    chart, drawn as markup.
 
     Args:
-    monthly (pandas.DataFrame): Columns 'month' and 'job_count', oldest first,
-                                as returned by queries.monthly_counts.
+    monthly (pandas.DataFrame): Column 'month' followed by one column per
+                                seniority level in stacking order, oldest month
+                                first, as returned by queries.monthly_counts_by.
 
     Returns:
     None: This function does not return a value. It directly renders the chart
           using Streamlit's plotly_chart function.
     """
-    months = list(monthly["month"])
-    counts = list(monthly["job_count"])
-    highest_count = max(counts) if counts else 0
+    months = list(monthly["month"]) if "month" in monthly else []
+    levels = [column for column in monthly.columns if column != "month"]
+    totals = monthly[levels].sum(axis=1) if levels else []
+    highest_count = int(max(totals)) if len(totals) else 0
 
-    fig_trend = go.Figure(
+    fig_trend = go.Figure()
+    for level in levels:
+        fig_trend.add_trace(
+            go.Scatter(
+                x=months,
+                y=list(monthly[level]),
+                name=level,
+                mode="lines",
+                stackgroup="seniority",
+                fillcolor=seniority_color(level),
+                # A hairline between bands, so the palest one still has an edge.
+                line={"color": SEGMENT_OUTLINE, "width": 1},
+                hovertemplate=f"{level}: <b>%{{y:,}}</b><extra></extra>",
+            )
+        )
+    # The stack's own traces can only report their own band, so the month's total
+    # is carried by an invisible line drawn along the top of the stack.
+    fig_trend.add_trace(
         go.Scatter(
             x=months,
-            y=counts,
+            y=list(totals),
+            name="Total",
             mode="lines",
-            fill="tozeroy",
-            fillcolor=TREND_FILL,
-            line={"color": ACCENT, "width": 2},
-            hovertemplate="<b>%{y:,}</b> jobs · %{x|%b '%y}<extra></extra>",
+            line={"width": 0},
+            hovertemplate="All levels: <b>%{y:,}</b> jobs<extra></extra>",
         )
     )
     fig_trend.update_layout(

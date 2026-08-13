@@ -8,10 +8,23 @@ The `dashboard` has been written with `Streamlit`.
 
 The dashobard provides insights on the job market on a country level (currently only Finland) which includes:
 
-- Demonstrating total number of jobs over a certain period (daily, weekly, monthly, yearly).
-- Demonstrating the companies with highest recruiting companies based on filters on the region, job field, seniority level and time period.
-- Demonstrating the demand for jobs based on selected filters.
-- Demonstrating the latest job posts.
+- **Trend** — postings per month over a fixed 24-month window, stacked by seniority level, so
+  a change in volume can be read back to the levels that moved.
+- **Top recruiting companies** — ranked by open roles under the active filters.
+- **Momentum** — each seniority level's, or each region's, change against the previous month.
+- **Distribution** — job fields stacked by seniority level, or regions stacked by job field.
+  Hovering a band reads out its count; each row's sparkline is that row's shape across the
+  selected time period, cut into six slices, so it describes the same postings as the bar
+  beside it.
+- **Latest jobs** — the postings themselves, searchable and paged.
+
+Two rules keep the panels honest, and both are visible on the page:
+
+- A panel relaxes the filters it draws — the field breakdown ignores the job field filter,
+  the momentum-by-region view ignores the region filter — or its chart would collapse to a
+  single row. Each panel's subtitle states which filters it dropped.
+- Every KPI card repeats the filter combination it was measured under, so a scoped "top
+  recruiter" is not read as a national one.
 
 ## Usage
 
@@ -59,6 +72,12 @@ rather than stock Streamlit widgets. A few constraints follow from that:
   break the styling on upgrade.
 - Plotly figures are rendered with `theme=None`. Without it Streamlit substitutes its own
   template and discards the figure's.
+- Every stacked chart draws from one palette, `theme.STACK_RAMP_STEPS`. Its steps are spread
+  across the accent ramp on purpose: neighbouring steps cannot be told apart once two
+  segments touch, and the lightest step disappears against the page. For the same reason
+  each swatch and segment boundary carries a hairline outline. Seniority colors are bound to
+  the level name; job field colors are bound to rank, because which fields are on screen
+  depends on the filters, and the legend above the bars is what names them.
 - Fonts are vendored under `static/fonts/` and served through
   `[server] enableStaticServing`, so the app does not depend on an external font host.
 - Every value rendered into the hand-written HTML in `components.py` is passed through

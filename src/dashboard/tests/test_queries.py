@@ -135,6 +135,166 @@ class TestMonthlyCountsAndMomentum:
         assert change is None
 
 
+def inside_month(months_ago):
+    """A timestamp safely inside the month that many complete months back."""
+    month_start = pd.Timestamp.now().to_period("M").start_time
+    return month_start - pd.DateOffset(months=months_ago) + pd.Timedelta(days=1)
+
+
+def dated_frame(rows):
+    """Build a job frame from (months_ago, region, fields, seniority) tuples."""
+    return pd.DataFrame(
+        {
+            "date_posted": [inside_month(months) for months, *_ in rows],
+            "region": [row[1] for row in rows],
+            "job_fields": [row[2] for row in rows],
+            "seniority_level": [row[3] for row in rows],
+            "company": ["Tieto"] * len(rows),
+        }
+    )
+
+
+TWO_MONTHS = dated_frame(
+    [
+        (1, "Uusimaa", ["Sales"], "Entry level"),
+        (1, "Uusimaa", ["Sales"], "Entry level"),
+        (1, "Lapland", ["Sales"], "Director"),
+        (2, "Uusimaa", ["Sales"], "Entry level"),
+        (2, "Lapland", ["Sales"], "Director"),
+        (2, "Lapland", ["Sales"], "Director"),
+    ]
+)
+
+
+class TestStackedCounts:
+    def test_bands_divide_the_row_in_the_order_asked_for(self):
+        rows = qs.stacked_counts(
+            SAMPLE, "job_fields", "seniority_level", ["Entry level", "Director"]
+        )
+        by_name = {row["name"]: row for row in rows}
+
+        assert by_name["Information Technology"]["value"] == 2
+        assert by_name["Information Technology"]["segments"] == [
+            {"name": "Entry level", "value": 1},
+            {"name": "Director", "value": 1},
+            {"name": qs.OTHER_STACK_LABEL, "value": 0},
+        ]
+
+    def test_bands_outside_the_stack_share_one_bucket(self):
+        rows = qs.stacked_counts(
+            SAMPLE, "job_fields", "seniority_level", ["Entry level", "Director"]
+        )
+        sales = next(row for row in rows if row["name"] == "Sales")
+
+        assert {segment["name"]: segment["value"] for segment in sales["segments"]} == {
+            "Entry level": 1,
+            "Director": 0,
+            qs.OTHER_STACK_LABEL: 1,
+        }
+
+    def test_row_value_counts_postings_even_when_bands_double_count_them(self):
+        """A posting carries several job fields, so its bands total more than the
+        postings the row represents — the bar length must stay the postings."""
+        rows = qs.stacked_counts(
+            SAMPLE, "region", "job_fields", ["Information Technology"]
+        )
+        uusimaa = next(row for row in rows if row["name"] == "Uusimaa")
+
+        assert uusimaa["value"] == 2
+        assert sum(segment["value"] for segment in uusimaa["segments"]) == 3
+
+    def test_empty_frame_yields_no_rows(self):
+        assert qs.stacked_counts(SAMPLE.iloc[:0], "region", "job_fields", []) == []
+
+
+class TestMonthlyCountsBy:
+    def test_one_column_per_band_in_the_order_given(self):
+        monthly = qs.monthly_counts_by(
+            TWO_MONTHS, "seniority_level", ["Director", "Entry level"]
+        )
+
+        assert list(monthly.columns) == ["month", "Director", "Entry level"]
+        assert monthly["month"].is_monotonic_increasing
+        assert list(monthly["Director"]) == [2, 1]
+
+    def test_a_band_with_no_postings_stays_a_zero_row(self):
+        """A band that vanished between months would read as missing data."""
+        monthly = qs.monthly_counts_by(
+            TWO_MONTHS, "seniority_level", ["Director", "Executive"]
+        )
+
+        assert list(monthly["Executive"]) == [0, 0]
+
+    def test_empty_frame_yields_empty_result(self):
+        assert qs.monthly_counts_by(SAMPLE.iloc[:0], "region", ["Uusimaa"]).empty
+
+
+class TestPeriodSeries:
+    def test_the_window_is_the_selected_period_cut_into_slices(self):
+        """A six-month sparkline beside a panel labelled "Past month" would
+        describe different postings from the bar next to it."""
+        series = qs.period_series(SAMPLE, "region", ["Uusimaa"], "Past week")
+
+        assert len(series["Uusimaa"]) == qs.SPARKLINE_BUCKETS
+        assert max(series["Uusimaa"]) == pytest.approx(100.0)
+
+    def test_each_series_is_scaled_against_its_own_peak(self):
+        series = qs.period_series(SAMPLE, "region", ["Uusimaa", "Lapland"], "Past year")
+
+        assert max(series["Uusimaa"]) == pytest.approx(100.0)
+        assert max(series["Lapland"]) == pytest.approx(100.0)
+
+    def test_a_name_with_no_postings_has_no_series(self):
+        assert qs.period_series(SAMPLE, "region", ["Kainuu"], "Past month") == {
+            "Kainuu": []
+        }
+
+    def test_unknown_period_fails_loudly(self):
+        with pytest.raises(KeyError):
+            qs.period_series(SAMPLE, "region", ["Uusimaa"], "Any time")
+
+    def test_empty_frame_yields_a_series_for_every_name(self):
+        assert qs.period_series(
+            SAMPLE.iloc[:0], "region", ["Uusimaa"], "Past week"
+        ) == {"Uusimaa": []}
+
+
+class TestSegmentMomentum:
+    def test_segments_are_ordered_by_the_last_complete_month(self):
+        segments = qs.segment_momentum(TWO_MONTHS, "region")
+
+        assert [segment["name"] for segment in segments] == ["Uusimaa", "Lapland"]
+        assert segments[0]["postings"] == 2
+        assert segments[0]["change_percent"] == pytest.approx(100.0)
+        assert segments[1]["change_percent"] == pytest.approx(-50.0)
+
+    def test_small_segments_are_flagged_rather_than_dropped(self):
+        rows = [(1, "Uusimaa", ["Sales"], "Entry level")] * 20
+        rows += [(1, "Lapland", ["Sales"], "Entry level")]
+        rows += [(2, "Uusimaa", ["Sales"], "Entry level")]
+        segments = qs.segment_momentum(dated_frame(rows), "region")
+
+        assert [segment["is_low_volume"] for segment in segments] == [False, True]
+
+    def test_needs_two_complete_months(self):
+        one_month = dated_frame([(1, "Uusimaa", ["Sales"], "Entry level")])
+        assert qs.segment_momentum(one_month, "region") == []
+
+    def test_a_segment_new_this_month_has_no_percentage(self):
+        rows = [
+            (1, "Uusimaa", ["Sales"], "Entry level"),
+            (2, "Lapland", ["Sales"], "Entry level"),
+        ]
+        segments = qs.segment_momentum(dated_frame(rows), "region")
+
+        assert segments[0] == {
+            "name": "Uusimaa",
+            "postings": 1,
+            "change_percent": None,
+            "is_low_volume": False,
+        }
+
+
 class TestSearchJobs:
     def test_matches_title_or_company_case_insensitively(self):
         assert len(qs.search_jobs(SAMPLE, "tieto")) == 2

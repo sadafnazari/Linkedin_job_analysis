@@ -54,17 +54,38 @@ NEUTRAL_RAMP = {
 
 TREND_FILL = ACCENT_RAMP[100]
 
-# The seniority mix draws each row from a different ramp step — deliberate
-# variety inside the mono palette. The step is bound to the level itself, never
-# to its rank, so changing a filter never repaints a level a different color.
-SENIORITY_RAMP_STEPS = {
-    "Mid-Senior level": 900,
-    "Entry level": 500,
-    "Associate": 700,
-    "Director": 400,
-    "Internship": 300,
-    "Executive": 800,
-}
+# Every stacked segment on the page — seniority bands, job field bands — is drawn
+# from these six steps, so one legend vocabulary covers the whole dashboard.
+# The steps are deliberately spread across the ramp: neighbouring steps (900 next
+# to 800) are indistinguishable once they sit side by side in a bar, and step 100
+# all but disappears against the page background.
+STACK_RAMP_STEPS = (900, 400, 700, 200, 500, 300)
+STACK_PALETTE = [ACCENT_RAMP[step] for step in STACK_RAMP_STEPS]
+
+# A hairline on every swatch and segment boundary, so the light steps still read
+# as a shape rather than dissolving into the background.
+SEGMENT_OUTLINE = "rgba(29, 31, 32, 0.55)"
+
+# Seniority levels take their step from the shared palette by level, never by
+# rank, so changing a filter never repaints a level a different color. Job field
+# segments are bound to rank instead — which five fields are on screen depends on
+# the filters — and the legend above the bars is what names them.
+SENIORITY_RAMP_STEPS = dict(
+    zip(
+        (
+            "Mid-Senior level",
+            "Entry level",
+            "Associate",
+            "Director",
+            "Internship",
+            "Executive",
+        ),
+        STACK_RAMP_STEPS,
+    )
+)
+
+# The order seniority bands stack in, bottom first, wherever they are drawn.
+SENIORITY_ORDER = tuple(SENIORITY_RAMP_STEPS)
 
 # Sentinel options that switch a filter off. They are prepended to the resource
 # lists rather than stored in them, so the resource files stay a description of
@@ -87,6 +108,23 @@ def seniority_color(seniority_level):
     """
     step = SENIORITY_RAMP_STEPS.get(seniority_level)
     return ACCENT_RAMP[step] if step else ACCENT
+
+
+def stack_color(index):
+    """
+    Returns the color of the nth segment of a stacked bar.
+
+    Used where segments are ranked rather than named — the job field bands, whose
+    membership changes with the filters.
+
+    Args:
+    index (int): The segment's position in the stack, 0 first.
+
+    Returns:
+    str: A hex color from the shared stack palette, cycling if the stack is
+         longer than the palette.
+    """
+    return STACK_PALETTE[index % len(STACK_PALETTE)]
 
 
 def _build_industry_template():

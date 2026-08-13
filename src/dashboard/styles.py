@@ -110,9 +110,11 @@ _DESIGN_SYSTEM_CSS = """
   font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--color-accent);
 }
+/* The color is set rather than inherited: a card title is a plain div, so
+   without it the value takes Streamlit's active theme text color. */
 .card-title {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 17px; line-height: 1.2; margin: 0;
+  font-size: 17px; line-height: 1.2; margin: 0; color: var(--color-text);
 }
 .card-meta {
   display: flex; align-items: center; gap: 6px; font-size: 11px;
@@ -160,20 +162,61 @@ _DESIGN_SYSTEM_CSS = """
 .industry table.table a { color: var(--color-accent); text-decoration: none; font-size: 13px; }
 .industry table.table a:hover { text-decoration: underline; }
 
+/* — panel headers: kicker / heading / scope line — */
+.panel-header { display: flex; flex-direction: column; gap: var(--space-2); }
+.panel-subtitle { font-size: 12px; margin-bottom: var(--space-3); }
+
+/* — the color key above a stacked chart — */
+.legend {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font-size: 12px; margin-bottom: var(--space-3);
+}
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+/* The palest ramp steps are all but invisible on this background without it. */
+.legend-swatch {
+  width: 10px; height: 10px; display: block;
+  border: 1px solid rgba(29, 31, 32, 0.55);
+}
+
 /* — ranked bar list: label / track + fill / value — */
 .rank-list { display: flex; flex-direction: column; gap: var(--space-2); }
 .rank-row {
   display: grid; align-items: center; gap: var(--space-3);
   grid-template-columns: var(--rank-label-width, 120px) 1fr var(--rank-value-width, 40px);
 }
+.rank-list-stacked .rank-row {
+  grid-template-columns:
+    var(--rank-label-width, 120px) 1fr 36px var(--rank-value-width, 40px);
+}
 .rank-name {
   font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .rank-track { height: 10px; background: var(--color-surface); }
 .rank-fill { height: 100%; }
+.rank-stack { display: flex; height: 100%; }
+.rank-segment {
+  position: relative; height: 100%; box-sizing: border-box;
+  border-right: 1px solid rgba(29, 31, 32, 0.55);
+}
+.rank-segment:last-child { border-right: 0; }
+/* Hovering a band reads out its count, the way the trend chart's tooltip does. */
+.rank-row:hover .rank-track { overflow: visible; }
+.rank-segment::after {
+  content: attr(data-readout); position: absolute; bottom: 15px; left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 8px; background: var(--color-bg); color: var(--color-text);
+  border: 1px solid var(--color-divider); box-shadow: var(--shadow-sm);
+  font-size: 11px; white-space: nowrap;
+  opacity: 0; visibility: hidden; pointer-events: none; z-index: 10;
+}
+.rank-segment:hover { outline: 1px solid var(--color-text); outline-offset: -1px; }
+.rank-segment:hover::after { opacity: 1; visibility: visible; }
 .rank-value {
   font-size: 12px; text-align: right; color: var(--color-neutral-700);
 }
+svg.rank-spark { display: block; overflow: visible; }
+div.rank-spark { height: 14px; }
 
 /* — KPI cards — */
 .kpi-value {
@@ -183,6 +226,36 @@ _DESIGN_SYSTEM_CSS = """
 .kpi-momentum { font-size: 28px; }
 .spark { display: flex; align-items: flex-end; gap: 2px; height: 20px; margin-top: 2px; }
 .spark > span { width: 6px; display: block; }
+/* Which filters the headline value was measured under — without it a scoped
+   "top recruiter" reads as a national one. */
+.card-caption {
+  margin-top: auto; padding-top: var(--space-2); font-size: 11px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* — per-segment momentum: three cells to a row — */
+.momentum-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3);
+}
+.momentum-cell {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-divider);
+}
+/* Too few postings for the percentage to be reliable. Marked, never faded — the
+   number still has to be readable. */
+.momentum-cell.low-volume { border-style: dashed; }
+.momentum-name {
+  font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.momentum-meta {
+  font-size: 11px; color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.momentum-change {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 17px; white-space: nowrap;
+}
 
 /* — the sidebar's hero count — */
 .total-count {
@@ -224,8 +297,10 @@ _STREAMLIT_MAPPING_CSS = """
   width: 280px !important; min-width: 280px !important;
   background: var(--color-bg); border-right: none;
 }
+/* The rail's top padding has to be exactly the main column's, or the filters card
+   sits below the page's first card and the two columns read as detached. */
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {
-  padding: calc(52px + var(--space-8)) var(--space-4) var(--space-8);
+  padding: calc(52px + var(--space-6)) var(--space-4) var(--space-8);
   gap: var(--space-4);
 }
 [data-testid="stSidebarCollapseButton"], [data-testid="stSidebarHeader"] { display: none; }
@@ -266,6 +341,12 @@ div[class*="st-key-bp-"] {
 div[class*="st-key-bp-"] .stElementContainer:has(.corner) {
   position: static !important;
 }
+/* Streamlit pulls every markdown block up by a negative bottom margin, which it
+   can afford because its own blocks end in a paragraph's descender. Ours end in
+   a bordered grid, so the card's frame closed above its own last row. */
+div[class*="st-key-bp-"] > .stElementContainer:last-child [data-testid="stMarkdownContainer"] {
+  margin-bottom: 0;
+}
 
 /* Buttons: square, hairline, condensed — .btn and .btn-ghost. */
 [data-testid="stButton"] button {
@@ -298,6 +379,31 @@ div[class*="st-key-ghost-"] button:hover {
   font-size: 14px; background: transparent; color: var(--color-text);
 }
 [data-testid="stButtonGroup"] button + button { border-left: 1px solid var(--color-divider) !important; }
+/* A panel's view switcher is pinned to the card's top-right corner, out of the
+   vertical flow, so the card's frame is sized by its content alone. */
+div[class*="st-key-panel-control-"] {
+  position: absolute; top: var(--space-3); right: var(--space-3);
+  width: auto; z-index: 2;
+}
+div[class*="st-key-panel-control-"] [data-testid="stButtonGroup"] { width: fit-content; }
+/* Streamlit positions the block holding it, which would anchor the switcher to
+   that block instead of to the card. */
+div[class*="st-key-bp-"] .stElementContainer:has(div[class*="st-key-panel-control-"]) {
+  position: static !important;
+}
+/* The screen switcher lines up with the panel switchers below it: hard against
+   the content's right edge, inset by a card's own padding and its hairline.
+   Streamlit sizes the block holding the control to the control, so it is that
+   block that has to be pushed across; an auto margin on the control itself has
+   no room to work in. */
+div[class*="st-key-page-tabs"] { align-items: flex-end; }
+div[class*="st-key-page-tabs"] [data-testid="stButtonGroup"] {
+  margin-right: calc(var(--space-3) + 1px); width: fit-content;
+}
+/* The header shares the card's first line with the pinned switcher. */
+div[class*="st-key-bp-"]:has(div[class*="st-key-panel-control-"]) .panel-header {
+  padding-right: 180px;
+}
 [data-testid="stButtonGroup"] button[aria-checked="true"],
 [data-testid="stButtonGroup"] button[kind="segmented_controlActive"] {
   background: var(--color-accent) !important; color: var(--color-bg) !important;

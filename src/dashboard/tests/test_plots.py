@@ -3,6 +3,7 @@ import pytest
 import streamlit as st
 
 import plots
+import theme
 
 
 @pytest.fixture
@@ -20,24 +21,44 @@ def captured_chart(monkeypatch):
 MONTHLY = pd.DataFrame(
     {
         "month": pd.date_range("2025-01-31", periods=6, freq="ME"),
-        "job_count": [10, 14, 9, 20, 18, 25],
+        "Mid-Senior level": [6, 9, 5, 12, 11, 15],
+        "Entry level": [4, 5, 4, 8, 7, 10],
     }
 )
+TOTALS = [10, 14, 9, 20, 18, 25]
 
 
 class TestPlotTrend:
-    def test_renders_one_filled_series(self, captured_chart):
+    def test_one_stacked_band_per_seniority_level(self, captured_chart):
         plots.plot_trend(MONTHLY)
 
-        fig = captured_chart["fig"]
-        assert len(fig.data) == 1
-        assert fig.data[0].fill == "tozeroy"
-        assert list(fig.data[0].y) == list(MONTHLY["job_count"])
+        bands = [trace for trace in captured_chart["fig"].data if trace.stackgroup]
+        assert [band.name for band in bands] == ["Mid-Senior level", "Entry level"]
+        assert list(bands[0].y) == list(MONTHLY["Mid-Senior level"])
 
-    def test_y_axis_labels_only_zero_and_the_peak(self, captured_chart):
+    def test_bands_carry_their_level_color_not_the_series_order(self, captured_chart):
         plots.plot_trend(MONTHLY)
 
-        assert list(captured_chart["fig"].layout.yaxis.tickvals) == [0, 25]
+        bands = [trace for trace in captured_chart["fig"].data if trace.stackgroup]
+        assert [band.fillcolor for band in bands] == [
+            theme.seniority_color("Mid-Senior level"),
+            theme.seniority_color("Entry level"),
+        ]
+
+    def test_month_total_is_hoverable_without_being_drawn(self, captured_chart):
+        """The stacked bands can only report their own value, so the total is
+        carried by an invisible line along the top of the stack."""
+        plots.plot_trend(MONTHLY)
+
+        total = captured_chart["fig"].data[-1]
+        assert total.name == "Total"
+        assert list(total.y) == TOTALS
+        assert total.line.width == 0
+
+    def test_y_axis_labels_only_zero_and_the_peak_of_the_stack(self, captured_chart):
+        plots.plot_trend(MONTHLY)
+
+        assert list(captured_chart["fig"].layout.yaxis.tickvals) == [0, max(TOTALS)]
 
     def test_x_axis_labels_every_fourth_month_plus_the_last(self, captured_chart):
         plots.plot_trend(MONTHLY)
@@ -54,6 +75,6 @@ class TestPlotTrend:
         assert captured_chart["kwargs"]["config"]["displayModeBar"] is False
 
     def test_empty_history_still_renders(self, captured_chart):
-        plots.plot_trend(pd.DataFrame({"month": [], "job_count": []}))
+        plots.plot_trend(pd.DataFrame())
 
         assert len(captured_chart["fig"].data) == 1

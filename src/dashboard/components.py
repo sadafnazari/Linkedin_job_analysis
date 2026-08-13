@@ -23,6 +23,37 @@ _CORNERS = (
     '<i class="corner bl"></i><i class="corner br"></i>'
 )
 
+_SPARKLINE_WIDTH = 36
+_SPARKLINE_HEIGHT = 14
+
+
+def _change_markup(change_percent):
+    """
+    Renders a month-over-month change the same way wherever it appears.
+
+    Args:
+    change_percent (float or None): The change, e.g. -4.0, or None when there is
+                                    no previous month to compare against.
+
+    Returns:
+    tuple: (arrow, label, color).
+    """
+    if change_percent is None:
+        return "", "n/a", NEUTRAL_RAMP[700]
+    is_positive = change_percent > 0
+    return (
+        "▲" if is_positive else "▼",
+        f"{change_percent:+.0f}%",
+        ACCENT if is_positive else NEUTRAL_RAMP[700],
+    )
+
+
+def _caption_html(caption):
+    """Renders the muted line naming the filters a card's value was measured under."""
+    if not caption:
+        return ""
+    return f'<div class="card-caption">{escape(caption)}</div>'
+
 
 def render(html):
     """
@@ -106,7 +137,7 @@ def top_nav_html(last_updated_label):
     )
 
 
-def stat_card_html(kicker, value, meta):
+def stat_card_html(kicker, value, meta, caption=None):
     """
     Builds one of the three plain KPI cards (top field, top region, top recruiter).
 
@@ -114,6 +145,8 @@ def stat_card_html(kicker, value, meta):
     kicker (str): The small uppercase label above the value.
     value (str): The headline value, e.g. a field or company name.
     meta (str): The supporting line beneath it.
+    caption (str): Optional filter combination the value was measured under, so
+                   a scoped "top recruiter" is not read as a national one.
 
     Returns:
     str: The card markup.
@@ -122,10 +155,11 @@ def stat_card_html(kicker, value, meta):
         f'<div class="card-kicker">{escape(kicker)}</div>'
         f'<div class="card-title kpi-value" title="{escape(value)}">{escape(value)}</div>'
         f'<div class="card-meta">{escape(meta)}</div>'
+        f"{_caption_html(caption)}"
     )
 
 
-def momentum_card_html(change_percent, sparkline_percents):
+def momentum_card_html(change_percent, sparkline_percents, caption=None):
     """
     Builds the momentum KPI card: direction, month-over-month change, sparkline.
 
@@ -136,17 +170,12 @@ def momentum_card_html(change_percent, sparkline_percents):
     change_percent (float or None): Month-over-month change, e.g. -4.0. None when
                                     there is no previous month to compare against.
     sparkline_percents (list of float): Relative heights, 0-100, oldest first.
+    caption (str): Optional filter combination the change was measured under.
 
     Returns:
     str: The card markup.
     """
-    if change_percent is None:
-        arrow, label, color = "", "n/a", NEUTRAL_RAMP[700]
-    else:
-        is_positive = change_percent > 0
-        arrow = "▲" if is_positive else "▼"
-        label = f"{change_percent:+.0f}%"
-        color = ACCENT if is_positive else NEUTRAL_RAMP[700]
+    arrow, label, color = _change_markup(change_percent)
 
     last_index = len(sparkline_percents) - 1
     bars = "".join(
@@ -160,6 +189,7 @@ def momentum_card_html(change_percent, sparkline_percents):
         f'<div class="card-title kpi-momentum" style="color:{color}">{arrow} {label}</div>'
         '<div class="card-meta">vs. previous month</div>'
         f'<div class="spark">{bars}</div>'
+        f"{_caption_html(caption)}"
     )
 
 
@@ -181,25 +211,58 @@ def kpi_row_html(cards_html):
     )
 
 
-def two_column_row_html(left_html, right_html):
+def legend_html(entries):
     """
-    Places two cards side by side as one grid row, so they share a height.
+    Builds the color key that sits above a stacked chart, never below it.
 
-    A CSS grid is used rather than st.columns because both cards are markup we
-    build: the grid stretches them to match whatever the taller one needs, which
-    columns of independently sized cards cannot do.
+    A legend under the bars is read after the colors have already been guessed at,
+    so it goes between the description and the first bar. Each swatch carries a
+    hairline outline, or the palest steps vanish into the page.
 
     Args:
-    left_html (str): Card markup for the left column.
-    right_html (str): Card markup for the right column.
+    entries (list of dict): Each with 'name' (str) and 'color' (hex), in the same
+                            order the segments stack in.
 
     Returns:
-    str: The row markup.
+    str: The legend markup, empty when there is nothing to key.
     """
+    if not entries:
+        return ""
+    items = "".join(
+        f'<span class="legend-item">'
+        f'<i class="legend-swatch" style="background:{entry["color"]}"></i>'
+        f'{escape(str(entry["name"]))}</span>'
+        for entry in entries
+    )
+    return f'<div class="legend">{items}</div>'
+
+
+def sparkline_svg_html(percents):
+    """
+    Builds the small inline shape showing a row's recent direction.
+
+    Args:
+    percents (list of float): Relative heights, 0-100, oldest first.
+
+    Returns:
+    str: An inline SVG, or an empty cell's markup when a single month cannot
+         describe a direction.
+    """
+    if len(percents) < 2:
+        return '<div class="rank-spark"></div>'
+
+    step = _SPARKLINE_WIDTH / (len(percents) - 1)
+    usable_height = _SPARKLINE_HEIGHT - 2
+    points = " ".join(
+        f"{index * step:.1f},{1 + usable_height - percent / 100 * usable_height:.1f}"
+        for index, percent in enumerate(percents)
+    )
     return (
-        '<div class="industry" style="display:grid;grid-template-columns:1fr 1fr;'
-        'gap:var(--space-6);margin-bottom:var(--space-6);align-items:stretch">'
-        f"{left_html}{right_html}</div>"
+        f'<svg class="rank-spark" width="{_SPARKLINE_WIDTH}" '
+        f'height="{_SPARKLINE_HEIGHT}" viewBox="0 0 {_SPARKLINE_WIDTH} '
+        f'{_SPARKLINE_HEIGHT}" preserveAspectRatio="none" aria-hidden="true">'
+        f'<polyline points="{points}" fill="none" stroke="{ACCENT}" '
+        'stroke-width="1" vector-effect="non-scaling-stroke"/></svg>'
     )
 
 
@@ -244,6 +307,175 @@ def ranked_bar_list_html(rows, label_width=120, value_width=40):
     )
 
 
+def stacked_bar_list_html(rows, colors, label_width=220, value_width=44):
+    """
+    Builds a ranked bar list whose bars are divided into colored bands.
+
+    The bar's length still reads as the row's volume, against the same track as
+    every other list on the page; the bands divide that length by composition, so
+    a row whose bands are counted twice (a posting carries several job fields)
+    still measures the postings it represents.
+
+    Args:
+    rows (list of dict): Each with 'name' (str), 'value' (int), 'segments' (list
+                         of {'name', 'value'} in stacking order) and optionally
+                         'spark' (list of float, 0-100).
+    colors (dict): Band name -> hex color.
+    label_width (int): Width of the label column in pixels.
+    value_width (int): Width of the value column in pixels.
+
+    Returns:
+    str: The list markup, empty when there are no rows.
+    """
+    if not rows:
+        return ""
+
+    largest_value = max(row["value"] for row in rows) or 1
+    row_markup = []
+    for row in rows:
+        segments = row.get("segments", [])
+        band_total = sum(segment["value"] for segment in segments) or 1
+        # Hovering a band is how its exact count is read, as on the trend chart.
+        bands = "".join(
+            f'<span class="rank-segment" '
+            f'style="width:{segment["value"] / band_total * 100:.2f}%;'
+            f'background:{colors.get(segment["name"], ACCENT)}" '
+            f'data-readout="{escape(str(segment["name"]))}: '
+            f'{segment["value"]:,} jobs"></span>'
+            for segment in segments
+            if segment["value"]
+        )
+        row_markup.append(
+            '<div class="rank-row">'
+            f'<div class="rank-name" title="{escape(str(row["name"]))}">'
+            f'{escape(str(row["name"]))}</div>'
+            '<div class="rank-track">'
+            f'<div class="rank-stack" style="width:{row["value"] / largest_value * 100:.1f}%">'
+            f"{bands}</div></div>"
+            f'{sparkline_svg_html(row.get("spark", []))}'
+            f'<div class="rank-value">{row["value"]:,}</div>'
+            "</div>"
+        )
+    return (
+        f'<div class="rank-list rank-list-stacked" '
+        f'style="--rank-label-width:{label_width}px;'
+        f'--rank-value-width:{value_width}px">{"".join(row_markup)}</div>'
+    )
+
+
+def momentum_grid_html(segments):
+    """
+    Builds the per-segment month-over-month grid, three cells to a row.
+
+    A segment too small for its percentage to mean much is marked with a dashed
+    border and says so in words. It is deliberately not faded: the reader still
+    has to be able to read the number they are being warned about.
+
+    Args:
+    segments (list of dict): Each with 'name', 'postings', 'change_percent'
+                             (float or None) and 'is_low_volume' (bool), ordered
+                             by descending volume.
+
+    Returns:
+    str: The grid markup, empty when there are no segments.
+    """
+    if not segments:
+        return ""
+
+    cells = []
+    for segment in segments:
+        arrow, label, color = _change_markup(segment["change_percent"])
+        low_volume = segment["is_low_volume"]
+        cells.append(
+            f'<div class="momentum-cell{" low-volume" if low_volume else ""}">'
+            "<div>"
+            f'<div class="momentum-name" title="{escape(str(segment["name"]))}">'
+            f'{escape(str(segment["name"]))}</div>'
+            f'<div class="momentum-meta">{segment["postings"]:,} postings'
+            f'{" · low volume" if low_volume else ""}</div>'
+            "</div>"
+            f'<div class="momentum-change" style="color:{color}">{arrow} {label}</div>'
+            "</div>"
+        )
+    return f'<div class="momentum-grid">{"".join(cells)}</div>'
+
+
+def panel_header_html(kicker, title, subtitle=None):
+    """
+    Builds a panel's kicker, heading and scope line, without the card around them.
+
+    Panels holding a real Streamlit widget — the view switchers — cannot be built
+    as one markup string, so they compose this header themselves.
+
+    Args:
+    kicker (str): Small uppercase label at the top of the panel.
+    title (str): The panel heading.
+    subtitle (str): Optional muted line beneath the heading.
+
+    Returns:
+    str: The header markup.
+    """
+    subtitle_markup = (
+        f'<div class="text-muted panel-subtitle">{escape(subtitle)}</div>'
+        if subtitle
+        else ""
+    )
+    return (
+        f'<div class="industry panel-header">'
+        f'<div class="card-kicker">{escape(kicker)}</div>'
+        f'<h4 class="card-title">{escape(title)}</h4>'
+        f"{subtitle_markup}</div>"
+    )
+
+
+def note_html(text):
+    """
+    Builds a muted line inside a panel, between its header and its content.
+
+    Args:
+    text (str): The note, e.g. how the rows beneath it are ordered.
+
+    Returns:
+    str: The note markup.
+    """
+    return f'<div class="industry text-muted panel-subtitle">{escape(text)}</div>'
+
+
+@contextmanager
+def switcher_panel(container_key, state_key, options, header_html):
+    """
+    Opens a blueprint panel whose header carries a view switcher.
+
+    The switcher is a real Streamlit control, so the panel cannot be built as one
+    markup string. It is written first and then pinned to the card's top-right
+    corner by the stylesheet, rather than sharing a column row with the header:
+    a column row is laid out by Streamlit, and its height and the card's frame
+    were not agreeing.
+
+    The control is instantiated from st.session_state[state_key], so callers can
+    read the chosen view — and build the header from it — before this runs.
+
+    Args:
+    container_key (str): A blueprint container key, unique on the page.
+    state_key (str): The st.session_state key holding the chosen option.
+    options (list of str): The switcher's options, in display order.
+    header_html (str): Markup from :func:`panel_header_html`.
+
+    Yields:
+    None: The caller renders the panel's body inside the ``with`` block.
+    """
+    with blueprint_container(container_key):
+        with st.container(key=f"panel-control-{state_key}"):
+            st.segmented_control(
+                state_key,
+                options=options,
+                key=state_key,
+                label_visibility="collapsed",
+            )
+        render(header_html)
+        yield
+
+
 def panel_html(kicker, title, body_html, subtitle=None):
     """
     Builds a titled blueprint panel — the shell every chart section sits in.
@@ -257,17 +489,7 @@ def panel_html(kicker, title, body_html, subtitle=None):
     Returns:
     str: The panel markup.
     """
-    subtitle_markup = (
-        f'<div class="text-muted" style="font-size:12px;margin-bottom:var(--space-3)">'
-        f"{escape(subtitle)}</div>"
-        if subtitle
-        else ""
-    )
-    return card_html(
-        f'<div class="card-kicker">{escape(kicker)}</div>'
-        f'<h4 class="card-title" style="margin-bottom:var(--space-3)">{escape(title)}</h4>'
-        f"{subtitle_markup}{body_html}"
-    )
+    return card_html(f"{panel_header_html(kicker, title, subtitle)}{body_html}")
 
 
 def page_header_html(title, subtitle):
